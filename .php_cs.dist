@@ -1,0 +1,39 @@
+<?php
+$fileHeaderComment = <<<COMMENT
+This file is part of Chunk - Asynchronous Task Queue Based on Distributed Message Passing for PHP
+(c) Clivern <hello@clivern.com>
+COMMENT;
+$finder = PhpCsFixer\Finder::create()
+    ->in(__DIR__)
+    ->exclude('var')
+;
+return PhpCsFixer\Config::create()
+    ->setIndent("    ")
+    ->setLineEnding("\n")
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@PSR2' => true,
+        '@Symfony' => true,
+        '@Symfony:risky' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'header_comment' => ['header' => $fileHeaderComment, 'separate' => 'both'],
+        'linebreak_after_opening_tag' => true,
+        'mb_str_functions' => true,
+        'no_php4_constructor' => true,
+        'no_unreachable_default_argument_value' => true,
+        'no_useless_else' => true,
+        'no_useless_return' => true,
+        'ordered_imports' => true,
+        'php_unit_strict' => true,
+        'phpdoc_order' => true,
+        'semicolon_after_instruction' => true,
+        'strict_comparison' => true,
+        'strict_param' => true,
+        'phpdoc_add_missing_param_annotation' => true,
+        'ordered_class_elements'=> true,
+        'phpdoc_types_order' => true,
+        'logical_operators' => true,
+    ])
+    ->setFinder($finder)
+    ->setCacheFile(__DIR__.'/.php_cs.cache')
+;
