@@ -13,7 +13,8 @@
         }
     ],
     "require": {
-        "php":">=7.0"
+        "php":">=7.0",
+        "php-amqplib/php-amqplib": "^2.11"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "2.16.1",
