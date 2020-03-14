@@ -3,7 +3,7 @@
     <h3 align="center">Chunk</h3>
     <p align="center">Asynchronous Task Queue Based on Distributed Message Passing for PHP</p>
     <p align="center">
-        <a href="https://travis-ci.org/Clivern/Chunk"><img src="https://travis-ci.org/Clivern/Chunk.svg?branch=master"></a>
+        <a href="https://travis-ci.com/Clivern/Chunk"><img src="https://travis-ci.com/Clivern/Chunk.svg?branch=master"></a>
         <a href="https://packagist.org/packages/clivern/chunk"><img src="https://img.shields.io/badge/Version-0.0.1-red.svg"></a>
         <a href="https://github.com/Clivern/Chunk/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg"></a>
     </p>
