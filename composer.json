@@ -9,7 +9,8 @@
         {
             "name": "Clivern",
             "email": "hello@clivern.com",
-            "homepage": "http://clivern.com"
+            "homepage": "http://clivern.com",
+            "role": "Maintainer"
         }
     ],
     "require": {
