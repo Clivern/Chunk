@@ -8,7 +8,6 @@
 namespace Tests\Util;
 
 use Clivern\Chunk\Util\Config;
-use Clivern\Chunk\Util\ConfigValue;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,16 +19,9 @@ class ConfigTest extends TestCase
     {
         $config = new Config();
         $this->assertTrue($config instanceof Config);
-        $config->set('key', new ConfigValue('value'));
-        $this->assertSame('value', $config->get('key', new ConfigValue())->value());
+        $config->set('key', 'value');
+        $this->assertSame('value', $config->get('key', null));
         $this->assertTrue($config->exists('key'));
         $this->assertFalse($config->exists('not_found'));
-    }
-
-    public function testConfigValue()
-    {
-        $configValue = new ConfigValue('value');
-        $this->assertTrue($configValue instanceof ConfigValue);
-        $this->assertSame('value', $configValue->value());
     }
 }

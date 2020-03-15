@@ -16,13 +16,17 @@ interface ConfigContract
 {
     /**
      * Set Config Item.
+     *
+     * @param mixed $value
      */
-    public function set(string $key, ConfigValueContract $value);
+    public function set(string $key, $value);
 
     /**
      * Get Config Item.
+     *
+     * @param mixed $default
      */
-    public function get(string $key, ConfigValueContract $default): ConfigValueContract;
+    public function get(string $key, $default);
 
     /**
      * Check if Item Exists.
