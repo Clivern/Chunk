@@ -19,6 +19,14 @@ class Config implements ConfigContract
     private $configs = [];
 
     /**
+     * Class Constructor.
+     */
+    public function __construct(array $configs = [])
+    {
+        $this->configs = $configs;
+    }
+
+    /**
      * Set Config Item.
      *
      * @param mixed $value
