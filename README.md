@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="chunk Logo" src="https://raw.githubusercontent.com/clivern/chunk/master/assets/img/logo1.png?v=0.0.2" width="110" />
+    <img alt="chunk Logo" src="https://raw.githubusercontent.com/clivern/chunk/master/assets/img/gopher.png?v=0.0.3" width="180" />
     <h3 align="center">Chunk</h3>
     <p align="center">Asynchronous Task Queue Based on Distributed Message Passing for PHP</p>
     <p align="center">
