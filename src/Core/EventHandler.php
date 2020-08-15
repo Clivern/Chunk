@@ -21,11 +21,17 @@ class EventHandler implements EventHandlerInterface
 {
     private $events = [];
 
+    /**
+     * {@inheritdoc}
+     */
     public function hasEvent(string $type): bool
     {
         return isset($this->events[$type]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addEvent(EventInterface $event): EventHandlerInterface
     {
         $this->events[$event->getType()] = $event;
@@ -33,6 +39,9 @@ class EventHandler implements EventHandlerInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function invokeEvent(string $type, MessageInterface $message)
     {
         if (!$this->hasEvent($type)) {

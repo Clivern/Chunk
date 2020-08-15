@@ -14,9 +14,22 @@ namespace Clivern\Chunk\Contract;
  */
 interface EventHandlerInterface
 {
+    /**
+     * Check if event exists by type.
+     */
     public function hasEvent(string $type): bool;
 
+    /**
+     * Add an Event.
+     *
+     * @return EventHandlerInterface
+     */
     public function addEvent(EventInterface $event): self;
 
+    /**
+     * Invoke an event with a message as parameter.
+     *
+     * @return void
+     */
     public function invokeEvent(string $type, MessageInterface $message);
 }
