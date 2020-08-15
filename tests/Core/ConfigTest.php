@@ -5,9 +5,9 @@
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Tests\Util;
+namespace Tests\Core;
 
-use Clivern\Chunk\Util\Config;
+use Clivern\Chunk\Core\Config;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -7,13 +7,13 @@ declare(strict_types=1);
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Clivern\Chunk\Broker;
+namespace Clivern\Chunk\Exception;
 
-use Clivern\Chunk\Contract\BrokerInterface;
+use Exception;
 
 /**
- * RabbitMQ Class.
+ * EventHandlerNotFound Exception.
  */
-class RabbitMQ implements BrokerInterface
+class EventHandlerNotFound extends Exception
 {
 }

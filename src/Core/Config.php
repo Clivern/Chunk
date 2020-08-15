@@ -7,7 +7,7 @@ declare(strict_types=1);
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Clivern\Chunk\Util;
+namespace Clivern\Chunk\Core;
 
 use Clivern\Chunk\Contract\ConfigInterface;
 
