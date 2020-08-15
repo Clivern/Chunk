@@ -11,7 +11,7 @@ namespace Clivern\Chunk\Core;
 
 use Clivern\Chunk\Contract\MapperInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;
-use Clivern\Chunk\Contract\MessageInterface;
+use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Exception\MessageHandlerFailed;
 use Clivern\Chunk\Exception\MessageHandlerNotFound;
 use Exception;
@@ -66,7 +66,7 @@ class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
-    public function callHandler(MessageInterface $message): bool
+    public function callHandler(AbstractMessage $message): bool
     {
         try {
             $handler = $this->getHandler($message->getHandlerType());

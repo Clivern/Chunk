@@ -16,9 +16,9 @@ interface BrokerInterface
 {
     public function connect(): bool;
 
-    public function send(MessageInterface $message): bool;
+    public function send(AbstractMessage $message): bool;
 
-    public function receive(): MessageInterface;
+    public function receive(): AbstractMessage;
 
     public function disconnect(): bool;
 }

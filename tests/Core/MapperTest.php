@@ -9,7 +9,7 @@ namespace Tests\Core;
 
 use Clivern\Chunk\Contract\MapperInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;
-use Clivern\Chunk\Contract\MessageInterface;
+use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Core\Mapper;
 use Clivern\Chunk\Exception\MessageHandlerFailed;
 use Clivern\Chunk\Exception\MessageHandlerNotFound;
@@ -54,7 +54,7 @@ class MapperTest extends TestCase
     {
         $mapper = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createMock(AbstractMessage::class);
 
         $message->expects($this->once())
             ->method('getHandlerType')
@@ -79,7 +79,7 @@ class MapperTest extends TestCase
     {
         $mapper = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
-        $message = $this->createMock(MessageInterface::class);
+        $message = $this->createMock(AbstractMessage::class);
 
         $message->expects($this->once())
             ->method('getHandlerType')
