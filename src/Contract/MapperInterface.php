@@ -14,11 +14,23 @@ namespace Clivern\Chunk\Contract;
  */
 interface MapperInterface
 {
+    /**
+     * Check if mapper has a handler.
+     */
     public function hasHandler(string $type): bool;
 
-    public function getHandler(string $type): ?MessageHandlerInterface;
+    /**
+     * Get Handler by type.
+     */
+    public function getHandler(string $type): MessageHandlerInterface;
 
-    public function addHandler(MessageHandlerInterface $handler): bool;
+    /**
+     * Add Handler to Mapper.
+     */
+    public function addHandler(MessageHandlerInterface $handler): self;
 
-    public function callHandler(string $type);
+    /**
+     * Call Handler with a Message.
+     */
+    public function callHandler(MessageInterface $message): bool;
 }

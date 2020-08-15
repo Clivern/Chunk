@@ -22,6 +22,14 @@ class EventHandler implements EventHandlerInterface
     private $events = [];
 
     /**
+     * Class Constructor.
+     */
+    public function __construct(array $events = [])
+    {
+        $this->events = $events;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function hasEvent(string $type): bool

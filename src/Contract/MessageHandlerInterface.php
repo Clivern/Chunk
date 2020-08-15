@@ -14,11 +14,29 @@ namespace Clivern\Chunk\Contract;
  */
 interface MessageHandlerInterface
 {
-    public function invoke();
+    /**
+     * Invoke Handler.
+     *
+     * @return MessageHandlerInterface
+     */
+    public function invoke(MessageInterface $message): self;
 
+    /**
+     * onSuccess Event.
+     *
+     * @return void
+     */
     public function onSuccess();
 
+    /**
+     * onFailure Event.
+     *
+     * @return void
+     */
     public function onFailure();
 
+    /**
+     * Handler Type.
+     */
     public function getType(): string;
 }

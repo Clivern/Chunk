@@ -19,7 +19,15 @@ interface EventInterface
     const ON_MESSAGE_HANDLED_EVENT = 'onMessageHandledEvent';
     const ON_MESSAGE_FAILED_EVENT = 'onMessageFailedEvent';
 
+    /**
+     * Get Event Type.
+     */
     public function getType(): string;
 
+    /**
+     * Invoke Event.
+     *
+     * @return void
+     */
     public function invoke(MessageInterface $message);
 }
