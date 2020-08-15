@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Clivern\Chunk\Contract;
 
 /**
- * Config Contract.
+ * Config Interface.
  */
-interface ConfigContract
+interface ConfigInterface
 {
     /**
      * Set Config Item.

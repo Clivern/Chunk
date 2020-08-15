@@ -7,13 +7,11 @@ declare(strict_types=1);
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Clivern\Chunk\Broker;
-
-use Clivern\Chunk\Contract\BrokerInterface;
+namespace Clivern\Chunk\Contract;
 
 /**
- * RabbitMQ Class.
+ * Listener Interface.
  */
-class RabbitMQ implements BrokerInterface
+interface ListenerInterface
 {
 }

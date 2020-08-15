@@ -7,13 +7,11 @@ declare(strict_types=1);
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Clivern\Chunk\Storage;
-
-use Clivern\Chunk\Contract\StorageContract;
+namespace Clivern\Chunk\Contract;
 
 /**
- * MySQL Class.
+ * Broker Interface.
  */
-class MySQL implements StorageContract
+interface BrokerInterface
 {
 }

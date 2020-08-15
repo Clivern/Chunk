@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Clivern\Chunk\Contract;
 
 /**
- * Broker Contract.
+ * Sender Interface.
  */
-interface BrokerContract
+interface SenderInterface
 {
 }

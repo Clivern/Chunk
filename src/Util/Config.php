@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Clivern\Chunk\Util;
 
-use Clivern\Chunk\Contract\ConfigContract;
+use Clivern\Chunk\Contract\ConfigInterface;
 
 /**
  * Config Class.
  */
-class Config implements ConfigContract
+class Config implements ConfigInterface
 {
     private $configs = [];
 

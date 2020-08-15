@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Clivern\Chunk\Contract;
 
 /**
- * Storage Contract.
+ * Mapper Interface.
  */
-interface StorageContract
+interface MapperInterface
 {
 }
