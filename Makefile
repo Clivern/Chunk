@@ -15,7 +15,7 @@ fix-diff:
 
 
 test: composer
-	vendor/bin/phpunit -c .
+	vendor/bin/phpunit -c . --coverage-text
 
 
 lint: lint-php phpcs php-cs lint-composer lint-eol
@@ -46,10 +46,6 @@ php-cs:
 	vendor/bin/php-cs-fixer fix --diff --dry-run -v
 
 
-coverage: composer
-	vendor/bin/phpunit -c .
-
-
 outdated:
 	$(COMPOSER) outdated
 
@@ -58,4 +54,4 @@ ci: composer lint test outdated
 	@echo "All quality checks passed"
 
 
-.PHONY: test composer coverage phpcs php-cs lint lint-php ci
+.PHONY: test composer phpcs php-cs lint lint-php ci
