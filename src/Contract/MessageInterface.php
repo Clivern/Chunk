@@ -14,4 +14,19 @@ namespace Clivern\Chunk\Contract;
  */
 interface MessageInterface
 {
+    public function setId(string $id): self;
+
+    public function getId(): string;
+
+    public function setUuid(string $uuid): self;
+
+    public function getUuid(): string;
+
+    public function getPayload(): string;
+
+    public function setPayload(string $payload): self;
+
+    public function setHandlerType(string $type): self;
+
+    public function getHandlerType(): string;
 }

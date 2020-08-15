@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Clivern\Chunk\Contract;
 
 /**
- * Sender Interface.
+ * Event Handler Interface.
  */
-interface SenderInterface
+interface EventHandlerInterface
 {
-    public function send(MessageInterface $message): bool;
+    public function addEvent(EventInterface $event): bool;
 
-    public function disconnect(): bool;
+    public function invokeEvents(string $type);
 }

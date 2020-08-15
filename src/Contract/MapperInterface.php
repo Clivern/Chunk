@@ -14,4 +14,11 @@ namespace Clivern\Chunk\Contract;
  */
 interface MapperInterface
 {
+    public function hasHandler(string $type): bool;
+
+    public function getHandler(string $type): ?MessageHandlerInterface;
+
+    public function addHandler(MessageHandlerInterface $handler): bool;
+
+    public function callHandler(string $type);
 }

@@ -10,8 +10,15 @@ declare(strict_types=1);
 namespace Clivern\Chunk\Contract;
 
 /**
- * Handler Interface.
+ * Message Handler Interface.
  */
-interface HandlerInterface
+interface MessageHandlerInterface
 {
+    public function invoke();
+
+    public function onSuccess();
+
+    public function onFailure();
+
+    public function getType(): string;
 }

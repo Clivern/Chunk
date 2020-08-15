@@ -14,4 +14,11 @@ namespace Clivern\Chunk\Contract;
  */
 interface BrokerInterface
 {
+    public function connect(): bool;
+
+    public function send(MessageInterface $message): bool;
+
+    public function receive(): MessageInterface;
+
+    public function disconnect(): bool;
 }

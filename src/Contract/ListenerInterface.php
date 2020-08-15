@@ -14,4 +14,5 @@ namespace Clivern\Chunk\Contract;
  */
 interface ListenerInterface
 {
+    public function consume();
 }

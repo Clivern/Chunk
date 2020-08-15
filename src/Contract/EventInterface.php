@@ -14,4 +14,12 @@ namespace Clivern\Chunk\Contract;
  */
 interface EventInterface
 {
+    const ON_MESSAGE_SENT_EVENT = 'onMessageSentEvent';
+    const ON_MESSAGE_RECEIVED_EVENT = 'onMessageReceivedEvent';
+    const ON_MESSAGE_HANDLED_EVENT = 'onMessageHandledEvent';
+    const ON_MESSAGE_FAILED_EVENT = 'onMessageFailedEvent';
+
+    public function getType(): string;
+
+    public function invoke(MessageInterface $message);
 }
