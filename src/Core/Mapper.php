@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Clivern\Chunk\Core;
 
+use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\MapperInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Exception\MessageHandlerFailed;
 use Clivern\Chunk\Exception\MessageHandlerNotFound;
 use Exception;

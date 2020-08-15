@@ -7,9 +7,9 @@
 
 namespace Tests\Core;
 
+use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\EventHandlerInterface;
 use Clivern\Chunk\Contract\EventInterface;
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Core\EventHandler;
 use Clivern\Chunk\Exception\EventHandlerNotFound;
 use PHPUnit\Framework\TestCase;

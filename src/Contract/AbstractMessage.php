@@ -27,6 +27,21 @@ abstract class AbstractMessage
     private $type;
 
     /**
+     * Convert to string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode([
+            'id' => $this->id,
+            'uuid' => $this->uuid,
+            'payload' => $this->payload,
+            'type' => $this->type,
+        ]);
+    }
+
+    /**
      * Set Message ID.
      */
     public function setId(string $id): self
