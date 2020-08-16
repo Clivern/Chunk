@@ -193,7 +193,7 @@ $listener->listen();
 $listener->disconnect();
 ```
 
-And start sending message from a different process
+And start sending a message from a different process
 
 ```php
 use Clivern\Chunk\Core\Sender;
