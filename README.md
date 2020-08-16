@@ -25,7 +25,7 @@ This command requires you to have `composer` installed globally.
 ### Basic Usage:
 
 
-First create event handlers. Chunk supports these events 
+First create event handlers. Chunk supports these events
 - `EventInterface::ON_MESSAGE_RECEIVED_EVENT`
 - `EventInterface::ON_MESSAGE_FAILED_EVENT`
 - `EventInterface::ON_MESSAGE_HANDLED_EVENT`
@@ -114,12 +114,12 @@ class MessageSentEvent implements EventInterface
 
 $eventHandler = new EventHandler();
 $eventHandler->addEvent(new MessageReceivedEvent())
-            ->addEvent(new MessageFailedEvent())
-            ->addEvent(new MessageHandledEvent())
-            ->addEvent(new MessageSentEvent());
+             ->addEvent(new MessageFailedEvent())
+             ->addEvent(new MessageHandledEvent())
+             ->addEvent(new MessageSentEvent());
 ```
 
-Then create async message handlers, Each handler has a unique key so chunk can map the message to the appropriate handler. 
+Then create async message handlers, Each handler has a unique key so chunk can map the message to the appropriate handler.
 
 In the following code, we create a handler to process any message with type `serviceA.processOrder`.
 
@@ -188,11 +188,8 @@ Now you can run listener daemon
 use Clivern\Chunk\Core\Listener;
 
 $listener = new Listener($broker, $eventHandler, $mapper);
-
 $listener->connect();
-
 $listener->listen();
-
 $listener->disconnect();
 ```
 
