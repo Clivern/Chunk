@@ -14,13 +14,4 @@ namespace Clivern\Chunk\Contract;
  */
 interface SenderInterface
 {
-    /**
-     * Send Message.
-     */
-    public function send(AbstractMessage $message): bool;
-
-    /**
-     * Disconnect the broker connection.
-     */
-    public function disconnect(): bool;
 }

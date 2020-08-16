@@ -12,6 +12,7 @@ namespace Clivern\Chunk\Core;
 use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\BrokerInterface;
 use Clivern\Chunk\Contract\EventHandlerInterface;
+use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\SenderInterface;
 
 /**
@@ -41,9 +42,24 @@ class Sender implements SenderInterface
     /**
      * {@inheritdoc}
      */
-    public function send(AbstractMessage $message): bool
+    public function connect()
     {
-        return true;
+        return $this->broker->connect();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function send(AbstractMessage $message)
+    {
+        $this->broker->send($message);
+
+        if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_SENT_EVENT)) {
+            $this->eventHandler->invokeEvent(
+                EventInterface::ON_MESSAGE_SENT_EVENT,
+                $message
+            );
+        }
     }
 
     /**
@@ -51,6 +67,14 @@ class Sender implements SenderInterface
      */
     public function disconnect(): bool
     {
-        return true;
+        return $this->broker->disconnect();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isConnected(): bool
+    {
+        return $this->broker->isConnected();
     }
 }

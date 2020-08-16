@@ -14,11 +14,34 @@ namespace Clivern\Chunk\Contract;
  */
 interface BrokerInterface
 {
-    public function connect(): bool;
+    /**
+     * Establish a Connection.
+     */
+    public function connect();
 
-    public function send(AbstractMessage $message): bool;
+    /**
+     * Send a message to queue.
+     *
+     * @return void
+     */
+    public function send(AbstractMessage $message);
 
-    public function receive(): AbstractMessage;
+    /**
+     * Receive messages from a queue.
+     *
+     * @param mixed $callback
+     *
+     * @return void
+     */
+    public function receive($callback);
 
-    public function disconnect(): bool;
+    /**
+     * Check if connection is active.
+     */
+    public function isConnected(): bool;
+
+    /**
+     * Disconnect.
+     */
+    public function disconnect();
 }

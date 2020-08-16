@@ -42,6 +42,22 @@ abstract class AbstractMessage
     }
 
     /**
+     * Load from string.
+     *
+     * @return void
+     */
+    public function fromString(string $data): self
+    {
+        $data = json_decode($data);
+        $this->id = $data->id;
+        $this->uuid = $data->uuid;
+        $this->payload = $data->payload;
+        $this->type = $data->type;
+
+        return $this;
+    }
+
+    /**
      * Set Message ID.
      */
     public function setId(string $id): self
