@@ -1,10 +1,10 @@
 <p align="center">
-    <img alt="chunk Logo" src="https://raw.githubusercontent.com/clivern/chunk/master/assets/img/gopher.png?v=0.0.3" width="180" />
+    <img alt="chunk Logo" src="https://raw.githubusercontent.com/clivern/chunk/master/assets/img/gopher.png?v=1.0.0" width="180" />
     <h3 align="center">Chunk</h3>
     <p align="center">Asynchronous Task Queue Based on Distributed Message Passing for PHP</p>
     <p align="center">
         <a href="https://travis-ci.com/Clivern/Chunk"><img src="https://travis-ci.com/Clivern/Chunk.svg?branch=master"></a>
-        <a href="https://packagist.org/packages/clivern/chunk"><img src="https://img.shields.io/badge/Version-0.0.1-red.svg"></a>
+        <a href="https://packagist.org/packages/clivern/chunk"><img src="https://img.shields.io/badge/Version-1.0.0-red.svg"></a>
         <a href="https://github.com/Clivern/Chunk/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg"></a>
     </p>
 </p>
@@ -25,7 +25,11 @@ This command requires you to have `composer` installed globally.
 ### Basic Usage:
 
 
-First create event handlers. Chunk supports these events `EventInterface::ON_MESSAGE_RECEIVED_EVENT`, `EventInterface::ON_MESSAGE_FAILED_EVENT`, `EventInterface::ON_MESSAGE_HANDLED_EVENT` and `EventInterface::ON_MESSAGE_SENT_EVENT`.
+First create event handlers. Chunk supports these events 
+- `EventInterface::ON_MESSAGE_RECEIVED_EVENT`
+- `EventInterface::ON_MESSAGE_FAILED_EVENT`
+- `EventInterface::ON_MESSAGE_HANDLED_EVENT`
+- `EventInterface::ON_MESSAGE_SENT_EVENT`
 
 ```php
 use Clivern\Chunk\Contract\AbstractMessage;
@@ -115,7 +119,9 @@ $eventHandler->addEvent(new MessageReceivedEvent())
             ->addEvent(new MessageSentEvent());
 ```
 
-Then create async message handlers. Each handler has a unique key so chunk can map the message to the appropriate handler. In the following code, we create a handler to process any message with type `serviceA.processOrder`.
+Then create async message handlers, Each handler has a unique key so chunk can map the message to the appropriate handler. 
+
+In the following code, we create a handler to process any message with type `serviceA.processOrder`.
 
 ```php
 use Clivern\Chunk\Contract\MessageHandlerInterface;
@@ -176,7 +182,7 @@ $broker = new RabbitMQ('127.0.0.1', 5672, 'guest', 'guest');
 ```
 
 
-Now you can run listener daemon:
+Now you can run listener daemon
 
 ```php
 use Clivern\Chunk\Core\Listener;
@@ -190,7 +196,7 @@ $listener->listen();
 $listener->disconnect();
 ```
 
-And start sending message:
+And start sending message from a different process
 
 ```php
 use Clivern\Chunk\Core\Sender;
