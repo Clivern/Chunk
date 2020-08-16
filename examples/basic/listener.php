@@ -123,8 +123,8 @@ $broker = new RabbitMQ('127.0.0.1', 5672, 'guest', 'guest');
 
 $eventHandler = new EventHandler();
 $eventHandler->addEvent(new MessageReceivedEvent())
-            ->addEvent(new MessageFailedEvent())
-            ->addEvent(new MessageHandledEvent());
+             ->addEvent(new MessageFailedEvent())
+             ->addEvent(new MessageHandledEvent());
 
 $mapper = new Mapper();
 $mapper->addHandler(new ProcessOrderMessageHandler());
@@ -132,7 +132,5 @@ $mapper->addHandler(new ProcessOrderMessageHandler());
 $listener = new Listener($broker, $eventHandler, $mapper);
 
 $listener->connect();
-
 $listener->listen();
-
 $listener->disconnect();
