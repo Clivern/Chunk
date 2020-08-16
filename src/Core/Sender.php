@@ -14,6 +14,7 @@ use Clivern\Chunk\Contract\BrokerInterface;
 use Clivern\Chunk\Contract\EventHandlerInterface;
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\SenderInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Sender Class.
@@ -52,6 +53,11 @@ class Sender implements SenderInterface
      */
     public function send(AbstractMessage $message)
     {
+        // Set UUID if not set
+        if (empty($message->getUuid())) {
+            $message->setUuid(Uuid::uuid4()->toString());
+        }
+
         $this->broker->send($message);
 
         if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_SENT_EVENT)) {
