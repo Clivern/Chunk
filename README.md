@@ -205,7 +205,7 @@ $sender->connect();
 
 $message = new Message();
 $message->setId(1)
-        ->setUuid('aaaa-bbbb-cccc-dddd')
+        ->setUuid('f9714a92-2129-44e6-9ef4-8eebc2e33958')
         ->setPayload('something')
         ->setHandlerType('serviceA.processOrder');
 
