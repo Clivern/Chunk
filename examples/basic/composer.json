@@ -1,0 +1,5 @@
+{
+    "require": {
+        "clivern/chunk": "^1.0.0"
+    }
+}

@@ -7,13 +7,13 @@ declare(strict_types=1);
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Clivern\Chunk\Broker;
+namespace Clivern\Chunk\Core;
 
-use Clivern\Chunk\Contract\BrokerContract;
+use Clivern\Chunk\Contract\AbstractMessage;
 
 /**
- * RabbitMQ Class.
+ * Message Class.
  */
-class RabbitMQ implements BrokerContract
+class Message extends AbstractMessage
 {
 }

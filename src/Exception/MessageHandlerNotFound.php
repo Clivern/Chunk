@@ -7,11 +7,13 @@ declare(strict_types=1);
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Clivern\Chunk\Contract;
+namespace Clivern\Chunk\Exception;
+
+use Exception;
 
 /**
- * Storage Contract.
+ * MessageHandlerNotFound Exception.
  */
-interface StorageContract
+class MessageHandlerNotFound extends Exception
 {
 }

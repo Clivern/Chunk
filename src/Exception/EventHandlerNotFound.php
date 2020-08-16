@@ -7,13 +7,13 @@ declare(strict_types=1);
  * (c) Clivern <hello@clivern.com>
  */
 
-namespace Clivern\Chunk\Storage;
+namespace Clivern\Chunk\Exception;
 
-use Clivern\Chunk\Contract\StorageContract;
+use Exception;
 
 /**
- * MySQL Class.
+ * EventHandlerNotFound Exception.
  */
-class MySQL implements StorageContract
+class EventHandlerNotFound extends Exception
 {
 }

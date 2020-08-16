@@ -1,5 +1,5 @@
-/vendor
 coverage.clover
 .env
 .php_cs.cache
 build
+vendor
