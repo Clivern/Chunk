@@ -65,7 +65,7 @@ class Sender implements SenderInterface
     /**
      * {@inheritdoc}
      */
-    public function disconnect(): bool
+    public function disconnect()
     {
         return $this->broker->disconnect();
     }

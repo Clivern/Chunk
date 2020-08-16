@@ -82,7 +82,6 @@ class RabbitMQ implements BrokerInterface
         $this->password = $password;
         $this->queue = $queue;
         $this->exchange = $exchange;
-        $this->configs = $configs;
 
         $this->configs['queue'] = array_merge(
             $this->configs['queue'],
