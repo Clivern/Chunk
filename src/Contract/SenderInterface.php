@@ -14,4 +14,23 @@ namespace Clivern\Chunk\Contract;
  */
 interface SenderInterface
 {
+    /**
+     * Connect to Broker.
+     */
+    public function connect();
+
+    /**
+     * Send a Message to a Queue.
+     */
+    public function send(AbstractMessage $message);
+
+    /**
+     * Disconnect.
+     */
+    public function disconnect();
+
+    /**
+     * Check if Connection Exists.
+     */
+    public function isConnected(): bool;
 }

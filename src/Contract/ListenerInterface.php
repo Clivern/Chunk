@@ -14,4 +14,23 @@ namespace Clivern\Chunk\Contract;
  */
 interface ListenerInterface
 {
+    /**
+     * Listen to Broker queue.
+     */
+    public function listen(): bool;
+
+    /**
+     * Connect to Broker.
+     */
+    public function connect();
+
+    /**
+     * Disconnect.
+     */
+    public function disconnect(): bool;
+
+    /**
+     * Check if Connection Exists.
+     */
+    public function isConnected(): bool;
 }
