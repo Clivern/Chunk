@@ -17,16 +17,16 @@ use Clivern\Chunk\Contract\MessageInterface;
 class Message implements MessageInterface
 {
     /** @var string */
-    private $id = "";
+    private $id = '';
 
     /** @var string */
-    private $uuid = "";
+    private $uuid = '';
 
     /** @var string */
-    private $payload = "";
+    private $payload = '';
 
     /** @var string */
-    private $type = "";
+    private $type = '';
 
     /**
      * {@inheritdoc}

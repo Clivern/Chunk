@@ -19,12 +19,12 @@ interface MessageInterface
      *
      * @return void
      */
-    public function fromString(string $data): MessageInterface;
+    public function fromString(string $data): self;
 
     /**
      * Set Message ID.
      */
-    public function setId(string $id): MessageInterface;
+    public function setId(string $id): self;
 
     /**
      * Get Message ID.
@@ -34,7 +34,7 @@ interface MessageInterface
     /**
      * Set Message UUID.
      */
-    public function setUuid(string $uuid): MessageInterface;
+    public function setUuid(string $uuid): self;
 
     /**
      * Get UUID.
@@ -44,7 +44,7 @@ interface MessageInterface
     /**
      * Set Payload.
      */
-    public function setPayload(string $payload): MessageInterface;
+    public function setPayload(string $payload): self;
 
     /**
      * Get Payload.
@@ -54,7 +54,7 @@ interface MessageInterface
     /**
      * Set Handler Type.
      */
-    public function setHandlerType(string $type): MessageInterface;
+    public function setHandlerType(string $type): self;
 
     /**
      * Get Handler Type.
