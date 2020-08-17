@@ -19,7 +19,7 @@ interface MessageHandlerInterface
      *
      * @return MessageHandlerInterface
      */
-    public function invoke(AbstractMessage $message): self;
+    public function invoke(MessageInterface $message): self;
 
     /**
      * onSuccess Event.

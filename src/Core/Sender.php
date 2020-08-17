@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Clivern\Chunk\Core;
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\BrokerInterface;
 use Clivern\Chunk\Contract\EventHandlerInterface;
 use Clivern\Chunk\Contract\EventInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Contract\SenderInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -51,7 +51,7 @@ class Sender implements SenderInterface
     /**
      * {@inheritdoc}
      */
-    public function send(AbstractMessage $message)
+    public function send(MessageInterface $message)
     {
         // Set UUID if not set
         if (empty($message->getUuid())) {

@@ -7,9 +7,9 @@
 
 namespace Tests\Core;
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\MapperInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Core\Mapper;
 use Clivern\Chunk\Exception\MessageHandlerFailed;
 use Clivern\Chunk\Exception\MessageHandlerNotFound;
@@ -25,7 +25,7 @@ class MapperTest extends TestCase
         $mapper = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
 
-        $handler->expects($this->once())
+        $handler->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 
@@ -39,7 +39,7 @@ class MapperTest extends TestCase
         $mapper = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
 
-        $handler->expects($this->once())
+        $handler->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 
@@ -54,13 +54,13 @@ class MapperTest extends TestCase
     {
         $mapper = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
-        $message = $this->createMock(AbstractMessage::class);
+        $message = $this->createMock(MessageInterface::class);
 
         $message->expects($this->once())
             ->method('getHandlerType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $handler->expects($this->once())
+        $handler->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 
@@ -79,13 +79,13 @@ class MapperTest extends TestCase
     {
         $mapper = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
-        $message = $this->createMock(AbstractMessage::class);
+        $message = $this->createMock(MessageInterface::class);
 
         $message->expects($this->once())
             ->method('getHandlerType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $handler->expects($this->once())
+        $handler->expects($this->exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 

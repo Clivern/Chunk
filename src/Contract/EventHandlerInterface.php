@@ -31,5 +31,5 @@ interface EventHandlerInterface
      *
      * @return void
      */
-    public function invokeEvent(string $type, AbstractMessage $message);
+    public function invokeEvent(string $type, MessageInterface $message);
 }

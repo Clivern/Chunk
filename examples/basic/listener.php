@@ -7,9 +7,9 @@
 
 include_once __DIR__.'/vendor/autoload.php';
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Core\Broker\RabbitMQ;
 use Clivern\Chunk\Core\EventHandler;
 use Clivern\Chunk\Core\Listener;
@@ -31,7 +31,7 @@ class MessageReceivedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Received Event: %s', (string) $message));
     }
@@ -50,7 +50,7 @@ class MessageFailedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Failed Event: %s', (string) $message));
     }
@@ -69,7 +69,7 @@ class MessageHandledEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Handled Event: %s', (string) $message));
     }
@@ -83,7 +83,7 @@ class ProcessOrderMessageHandler implements MessageHandlerInterface
     /**
      * Invoke Handler.
      */
-    public function invoke(AbstractMessage $message): MessageHandlerInterface
+    public function invoke(MessageInterface $message): MessageHandlerInterface
     {
         var_dump(sprintf('Process Message: %s', (string) $message));
 

@@ -32,5 +32,5 @@ interface MapperInterface
     /**
      * Call Handler with a Message.
      */
-    public function callHandler(AbstractMessage $message): bool;
+    public function callHandler(MessageInterface $message): bool;
 }

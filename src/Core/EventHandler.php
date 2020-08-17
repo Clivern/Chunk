@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace Clivern\Chunk\Core;
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\EventHandlerInterface;
 use Clivern\Chunk\Contract\EventInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Exception\EventHandlerNotFound;
+use Clivern\Chunk\Exception\HandlerTypeNotDefined;
 
 /**
  * EventHandler Class.
@@ -42,6 +43,10 @@ class EventHandler implements EventHandlerInterface
      */
     public function addEvent(EventInterface $event): EventHandlerInterface
     {
+        if (empty($event->getType())) {
+            throw new HandlerTypeNotDefined(sprintf('Handler %s missing the type', \get_class($event)));
+        }
+
         $this->events[$event->getType()] = $event;
 
         return $this;
@@ -50,7 +55,7 @@ class EventHandler implements EventHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function invokeEvent(string $type, AbstractMessage $message)
+    public function invokeEvent(string $type, MessageInterface $message)
     {
         if (!$this->hasEvent($type)) {
             throw new EventHandlerNotFound(sprintf('Error! event handler of type %s not found', $type));

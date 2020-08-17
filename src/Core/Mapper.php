@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Clivern\Chunk\Core;
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\MapperInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;
+use Clivern\Chunk\Contract\MessageInterface;
+use Clivern\Chunk\Exception\HandlerTypeNotDefined;
 use Clivern\Chunk\Exception\MessageHandlerFailed;
 use Clivern\Chunk\Exception\MessageHandlerNotFound;
 use Exception;
@@ -47,7 +48,7 @@ class Mapper implements MapperInterface
     public function getHandler(string $type): MessageHandlerInterface
     {
         if (!$this->hasHandler($type)) {
-            throw new MessageHandlerNotFound(sprintf('Error! message handler of type %s not found', $type));
+            throw new MessageHandlerNotFound(sprintf('Message handler of type %s not found', $type));
         }
 
         return $this->handlers[$type];
@@ -58,6 +59,10 @@ class Mapper implements MapperInterface
      */
     public function addHandler(MessageHandlerInterface $handler): MapperInterface
     {
+        if (empty($handler->getType())) {
+            throw new HandlerTypeNotDefined(sprintf('Handler %s missing the type', \get_class($handler)));
+        }
+
         $this->handlers[$handler->getType()] = $handler;
 
         return $this;
@@ -66,7 +71,7 @@ class Mapper implements MapperInterface
     /**
      * {@inheritdoc}
      */
-    public function callHandler(AbstractMessage $message): bool
+    public function callHandler(MessageInterface $message): bool
     {
         try {
             $handler = $this->getHandler($message->getHandlerType());

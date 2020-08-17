@@ -22,7 +22,7 @@ interface SenderInterface
     /**
      * Send a Message to a Queue.
      */
-    public function send(AbstractMessage $message);
+    public function send(MessageInterface $message);
 
     /**
      * Disconnect.

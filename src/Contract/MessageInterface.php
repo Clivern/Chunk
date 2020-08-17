@@ -1,0 +1,63 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of Chunk - Asynchronous Task Queue Based on Distributed Message Passing for PHP
+ * (c) Clivern <hello@clivern.com>
+ */
+
+namespace Clivern\Chunk\Contract;
+
+/**
+ * Message Interface.
+ */
+interface MessageInterface
+{
+    /**
+     * Load from string.
+     *
+     * @return void
+     */
+    public function fromString(string $data): MessageInterface;
+
+    /**
+     * Set Message ID.
+     */
+    public function setId(string $id): MessageInterface;
+
+    /**
+     * Get Message ID.
+     */
+    public function getId(): string;
+
+    /**
+     * Set Message UUID.
+     */
+    public function setUuid(string $uuid): MessageInterface;
+
+    /**
+     * Get UUID.
+     */
+    public function getUuid(): string;
+
+    /**
+     * Set Payload.
+     */
+    public function setPayload(string $payload): MessageInterface;
+
+    /**
+     * Get Payload.
+     */
+    public function getPayload(): string;
+
+    /**
+     * Set Handler Type.
+     */
+    public function setHandlerType(string $type): MessageInterface;
+
+    /**
+     * Get Handler Type.
+     */
+    public function getHandlerType(): string;
+}

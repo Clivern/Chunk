@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Clivern\Chunk\Core;
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\BrokerInterface;
 use Clivern\Chunk\Contract\EventHandlerInterface;
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\ListenerInterface;
 use Clivern\Chunk\Contract\MapperInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 
 /**
  * Listener Class.
@@ -51,7 +51,7 @@ class Listener implements ListenerInterface
         $this->eventHandler = $eventHandler;
         $this->mapper = $mapper;
 
-        if (!empty($messageObj) && $messageObj instanceof AbstractMessage) {
+        if (!empty($messageObj) && $messageObj instanceof MessageInterface) {
             $this->messageObj = $messageObj;
         } else {
             $this->messageObj = new Message();

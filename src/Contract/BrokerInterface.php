@@ -24,7 +24,7 @@ interface BrokerInterface
      *
      * @return void
      */
-    public function send(AbstractMessage $message);
+    public function send(MessageInterface $message);
 
     /**
      * Receive messages from a queue.

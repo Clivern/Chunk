@@ -7,8 +7,8 @@
 
 include_once __DIR__.'/vendor/autoload.php';
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\EventInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Core\Broker\RabbitMQ;
 use Clivern\Chunk\Core\EventHandler;
 use Clivern\Chunk\Core\Message;
@@ -30,7 +30,7 @@ class MessageSentEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Sent Event: %s', (string) $message));
     }

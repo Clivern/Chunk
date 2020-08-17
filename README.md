@@ -32,7 +32,7 @@ First create event handlers. Chunk supports these events
 - `EventInterface::ON_MESSAGE_SENT_EVENT`
 
 ```php
-use Clivern\Chunk\Contract\AbstractMessage;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Core\EventHandler;
 
@@ -49,7 +49,7 @@ class MessageReceivedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Received Event: %s', (string) $message));
     }
@@ -68,7 +68,7 @@ class MessageFailedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Failed Event: %s', (string) $message));
     }
@@ -87,7 +87,7 @@ class MessageHandledEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Handled Event: %s', (string) $message));
     }
@@ -106,7 +106,7 @@ class MessageSentEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(AbstractMessage $message)
+    public function invoke(MessageInterface $message)
     {
         var_dump(sprintf('Message Sent Event: %s', (string) $message));
     }
@@ -125,7 +125,7 @@ In the following code, we create a handler to process any message with type `ser
 
 ```php
 use Clivern\Chunk\Contract\MessageHandlerInterface;
-use Clivern\Chunk\Contract\AbstractMessage;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Core\Mapper;
 
 class ProcessOrderMessageHandler implements MessageHandlerInterface
@@ -133,7 +133,7 @@ class ProcessOrderMessageHandler implements MessageHandlerInterface
     /**
      * Invoke Handler.
      */
-    public function invoke(AbstractMessage $message): MessageHandlerInterface
+    public function invoke(MessageInterface $message): MessageHandlerInterface
     {
         var_dump(sprintf('Process Message: %s', (string) $message));
 

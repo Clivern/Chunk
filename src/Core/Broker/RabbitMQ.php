@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Clivern\Chunk\Core\Broker;
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\BrokerInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -119,7 +119,7 @@ class RabbitMQ implements BrokerInterface
     /**
      * {@inheritdoc}
      */
-    public function send(AbstractMessage $message)
+    public function send(MessageInterface $message)
     {
         $this->declareQueue();
 

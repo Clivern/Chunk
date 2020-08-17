@@ -29,5 +29,5 @@ interface EventInterface
      *
      * @return void
      */
-    public function invoke(AbstractMessage $message);
+    public function invoke(MessageInterface $message);
 }

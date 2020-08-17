@@ -7,9 +7,9 @@
 
 namespace Tests\Core;
 
-use Clivern\Chunk\Contract\AbstractMessage;
 use Clivern\Chunk\Contract\EventHandlerInterface;
 use Clivern\Chunk\Contract\EventInterface;
+use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Core\EventHandler;
 use Clivern\Chunk\Exception\EventHandlerNotFound;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +24,7 @@ class EventHandlerTest extends TestCase
         $eventHandler = new EventHandler();
         $event = $this->createMock(EventInterface::class);
 
-        $event->expects($this->once())
+        $event->expects($this->exactly(2))
             ->method('getType')
             ->willReturn(EventInterface::ON_MESSAGE_SENT_EVENT);
 
@@ -38,7 +38,7 @@ class EventHandlerTest extends TestCase
         $eventHandler = new EventHandler();
         $event = $this->createMock(EventInterface::class);
 
-        $event->expects($this->once())
+        $event->expects($this->exactly(2))
             ->method('getType')
             ->willReturn(EventInterface::ON_MESSAGE_SENT_EVENT);
 
@@ -51,9 +51,9 @@ class EventHandlerTest extends TestCase
     {
         $eventHandler = new EventHandler();
         $event = $this->createMock(EventInterface::class);
-        $message = $this->createMock(AbstractMessage::class);
+        $message = $this->createMock(MessageInterface::class);
 
-        $event->expects($this->once())
+        $event->expects($this->exactly(2))
             ->method('getType')
             ->willReturn(EventInterface::ON_MESSAGE_SENT_EVENT);
 
