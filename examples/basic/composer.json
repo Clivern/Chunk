@@ -1,5 +1,5 @@
 {
     "require": {
-        "clivern/chunk": "^1.0.1"
+        "clivern/chunk": "^1.2.0"
     }
 }

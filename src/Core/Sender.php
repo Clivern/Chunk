@@ -14,6 +14,7 @@ use Clivern\Chunk\Contract\EventHandlerInterface;
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\MessageInterface;
 use Clivern\Chunk\Contract\SenderInterface;
+use Exception;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -58,13 +59,25 @@ class Sender implements SenderInterface
             $message->setUuid(Uuid::uuid4()->toString());
         }
 
-        $this->broker->send($message);
+        try {
+            $this->broker->send($message);
 
-        if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_SENT_EVENT)) {
-            $this->eventHandler->invokeEvent(
-                EventInterface::ON_MESSAGE_SENT_EVENT,
-                $message
-            );
+            if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_SENT_EVENT)) {
+                $this->eventHandler->invokeEvent(
+                    EventInterface::ON_MESSAGE_SENT_EVENT,
+                    $message
+                );
+            }
+        } catch (Exception $e) {
+            if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_SEND_FAILURE_EVENT)) {
+                $this->eventHandler->invokeEvent(
+                    EventInterface::ON_MESSAGE_SEND_FAILURE_EVENT,
+                    $message,
+                    $e
+                );
+            } else {
+                throw new Exception($e);
+            }
         }
     }
 

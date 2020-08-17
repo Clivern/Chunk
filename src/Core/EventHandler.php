@@ -55,12 +55,12 @@ class EventHandler implements EventHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function invokeEvent(string $type, MessageInterface $message)
+    public function invokeEvent(string $type, MessageInterface $message, $exception = null)
     {
         if (!$this->hasEvent($type)) {
             throw new EventHandlerNotFound(sprintf('Error! event handler of type %s not found', $type));
         }
 
-        return $this->events[$type]->invoke($message);
+        return $this->events[$type]->invoke($message, $exception);
     }
 }

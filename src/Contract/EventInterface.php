@@ -18,6 +18,7 @@ interface EventInterface
     const ON_MESSAGE_RECEIVED_EVENT = 'onMessageReceivedEvent';
     const ON_MESSAGE_HANDLED_EVENT = 'onMessageHandledEvent';
     const ON_MESSAGE_FAILED_EVENT = 'onMessageFailedEvent';
+    const ON_MESSAGE_SEND_FAILURE_EVENT = 'onMessageSendFailureEvent';
 
     /**
      * Get Event Type.
@@ -27,7 +28,9 @@ interface EventInterface
     /**
      * Invoke Event.
      *
+     * @param null|mixed $exception
+     *
      * @return void
      */
-    public function invoke(MessageInterface $message);
+    public function invoke(MessageInterface $message, $exception = null);
 }

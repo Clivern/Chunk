@@ -78,29 +78,30 @@ class Listener implements ListenerInterface
      */
     public function callback($message)
     {
-        $messageObj = $this->messageObj->fromString($message->body);
+        $this->messageObj->fromString($message->body);
 
         if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_RECEIVED_EVENT)) {
             $this->eventHandler->invokeEvent(
                 EventInterface::ON_MESSAGE_RECEIVED_EVENT,
-                $messageObj
+                $this->messageObj
             );
         }
 
         try {
-            $this->mapper->callHandler($messageObj);
+            $this->mapper->callHandler($this->messageObj);
 
             if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_HANDLED_EVENT)) {
                 $this->eventHandler->invokeEvent(
                     EventInterface::ON_MESSAGE_HANDLED_EVENT,
-                    $messageObj
+                    $this->messageObj
                 );
             }
         } catch (\Exception $e) {
             if ($this->eventHandler->hasEvent(EventInterface::ON_MESSAGE_FAILED_EVENT)) {
                 $this->eventHandler->invokeEvent(
                     EventInterface::ON_MESSAGE_FAILED_EVENT,
-                    $messageObj
+                    $this->messageObj,
+                    $e
                 );
             }
         }

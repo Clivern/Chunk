@@ -31,7 +31,7 @@ class MessageReceivedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Received Event: %s', (string) $message));
     }
@@ -50,7 +50,7 @@ class MessageFailedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Failed Event: %s', (string) $message));
     }
@@ -69,7 +69,7 @@ class MessageHandledEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Handled Event: %s', (string) $message));
     }

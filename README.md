@@ -1,10 +1,10 @@
 <p align="center">
-    <img alt="chunk Logo" src="https://raw.githubusercontent.com/clivern/chunk/master/assets/img/gopher.png?v=1.0.1" width="180" />
+    <img alt="chunk Logo" src="https://raw.githubusercontent.com/clivern/chunk/master/assets/img/gopher.png?v=1.2.0" width="180" />
     <h3 align="center">Chunk</h3>
     <p align="center">Asynchronous Task Queue Based on Distributed Message Passing for PHP</p>
     <p align="center">
         <a href="https://travis-ci.com/Clivern/Chunk"><img src="https://travis-ci.com/Clivern/Chunk.svg?branch=master"></a>
-        <a href="https://packagist.org/packages/clivern/chunk"><img src="https://img.shields.io/badge/Version-1.0.1-red.svg"></a>
+        <a href="https://packagist.org/packages/clivern/chunk"><img src="https://img.shields.io/badge/Version-1.2.0-red.svg"></a>
         <a href="https://github.com/Clivern/Chunk/blob/master/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg"></a>
     </p>
 </p>
@@ -30,6 +30,7 @@ First create event handlers. Chunk supports these events
 - `EventInterface::ON_MESSAGE_FAILED_EVENT`
 - `EventInterface::ON_MESSAGE_HANDLED_EVENT`
 - `EventInterface::ON_MESSAGE_SENT_EVENT`
+- `EventInterface::ON_MESSAGE_SEND_FAILURE_EVENT`
 
 ```php
 use Clivern\Chunk\Contract\MessageInterface;
@@ -49,7 +50,7 @@ class MessageReceivedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Received Event: %s', (string) $message));
     }
@@ -68,7 +69,7 @@ class MessageFailedEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Failed Event: %s', (string) $message));
     }
@@ -87,7 +88,7 @@ class MessageHandledEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Handled Event: %s', (string) $message));
     }
@@ -106,9 +107,29 @@ class MessageSentEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Sent Event: %s', (string) $message));
+    }
+}
+
+class MessageSendFailureEvent implements EventInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return EventInterface::ON_MESSAGE_SEND_FAILURE_EVENT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function invoke(MessageInterface $message, $exception = null)
+    {
+        var_dump(sprintf('Message Send Failure Event: %s', (string) $message));
+        var_dump(sprintf('Error raised: %s', $exception->getMessage()));
     }
 }
 
@@ -116,6 +137,7 @@ $eventHandler = new EventHandler();
 $eventHandler->addEvent(new MessageReceivedEvent())
              ->addEvent(new MessageFailedEvent())
              ->addEvent(new MessageHandledEvent())
+             ->addEvent(new MessageSendFailureEvent())
              ->addEvent(new MessageSentEvent());
 ```
 
@@ -205,9 +227,9 @@ $sender->connect();
 
 $message = new Message();
 $message->setId(1)
-        ->setUuid('f9714a92-2129-44e6-9ef4-8eebc2e33958')
+        ->setUuid('f9714a92-2129-44e6-9ef4-8eebc2e33958') // or leave & chunk will generate a uuid
         ->setPayload('something')
-        ->setHandlerType('serviceA.processOrder');
+        ->setHandlerType('serviceA.processOrder'); // same as the one defined in ProcessOrderMessageHandler class -> getType method
 
 $sender->send($message);
 $sender->disconnect();

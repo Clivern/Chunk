@@ -30,16 +30,37 @@ class MessageSentEvent implements EventInterface
     /**
      * {@inheritdoc}
      */
-    public function invoke(MessageInterface $message)
+    public function invoke(MessageInterface $message, $exception = null)
     {
         var_dump(sprintf('Message Sent Event: %s', (string) $message));
+    }
+}
+
+class MessageSendFailureEvent implements EventInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return EventInterface::ON_MESSAGE_SEND_FAILURE_EVENT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function invoke(MessageInterface $message, $exception = null)
+    {
+        var_dump(sprintf('Message Send Failure Event: %s', (string) $message));
+        var_dump(sprintf('Error raised: %s', $exception->getMessage()));
     }
 }
 
 $broker = new RabbitMQ('127.0.0.1', 5672, 'guest', 'guest');
 
 $eventHandler = new EventHandler();
-$eventHandler->addEvent(new MessageSentEvent());
+$eventHandler->addEvent(new MessageSentEvent())
+             ->addEvent(new MessageSendFailureEvent());
 
 $sender = new Sender($broker, $eventHandler);
 
@@ -47,7 +68,6 @@ $sender->connect();
 
 $message = new Message();
 $message->setId(1)
-        ->setUuid('aaaa-bbbb-cccc-dddd')
         ->setPayload('something')
         ->setHandlerType('serviceA.processOrder');
 
