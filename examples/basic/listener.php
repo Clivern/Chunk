@@ -5,7 +5,7 @@
  * (c) Clivern <hello@clivern.com>
  */
 
-include_once __DIR__.'/../../vendor/autoload.php';
+include_once __DIR__.'/vendor/autoload.php';
 
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;

@@ -93,10 +93,17 @@ class RabbitMQ implements BrokerInterface
             isset($configs['delivery']) ? $configs['delivery'] : []
         );
 
-        $this->configs['queue_name'] = (isset($configs['queue_name'])) ? $configs['queue_name'] : $this->configs['queue_name'];
-        $this->configs['vhost'] = (isset($configs['vhost'])) ? $configs['vhost'] : $this->configs['vhost'];
-        $this->configs['routing_key'] = (isset($configs['routing_key'])) ? $configs['routing_key'] : $this->configs['routing_key'];
-        $this->configs['exchange'] = (isset($configs['exchange'])) ? $configs['exchange'] : $this->configs['exchange'];
+        $this->configs['queue_name'] = (isset($configs['queue_name']))
+            ? $configs['queue_name'] : $this->configs['queue_name'];
+
+        $this->configs['vhost'] = (isset($configs['vhost']))
+            ? $configs['vhost'] : $this->configs['vhost'];
+
+        $this->configs['routing_key'] = (isset($configs['routing_key']))
+            ? $configs['routing_key'] : $this->configs['routing_key'];
+
+        $this->configs['exchange'] = (isset($configs['exchange']))
+            ? $configs['exchange'] : $this->configs['exchange'];
     }
 
     /**
