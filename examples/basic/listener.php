@@ -5,7 +5,7 @@
  * (c) Clivern <hello@clivern.com>
  */
 
-include_once __DIR__.'/vendor/autoload.php';
+include_once __DIR__.'/../../vendor/autoload.php';
 
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\MessageHandlerInterface;
@@ -119,7 +119,26 @@ class ProcessOrderMessageHandler implements MessageHandlerInterface
     }
 }
 
-$broker = new RabbitMQ('127.0.0.1', 5672, 'guest', 'guest', 'default', '', ['consumer' => ['no_ack' => true]]);
+$server = '127.0.0.1';
+$port = 5672;
+$username = 'guest';
+$password = 'guest';
+$configs = [
+    'consumer' => ['no_ack' => true],
+
+    'queue_name' => 'default',
+    'vhost' => '/',
+    'routing_key' => 'default',
+    'exchange' => '',
+];
+
+$broker = new RabbitMQ(
+    $server,
+    $port,
+    $username,
+    $password,
+    $configs
+);
 
 $eventHandler = new EventHandler();
 $eventHandler->addEvent(new MessageReceivedEvent())

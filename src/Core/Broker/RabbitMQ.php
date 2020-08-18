@@ -37,12 +37,6 @@ class RabbitMQ implements BrokerInterface
     /** @var obj */
     private $channel;
 
-    /** @var string */
-    private $queue = 'default';
-
-    /** @var string */
-    private $exchange = '';
-
     /** @var array */
     private $configs = [
         'queue' => [
@@ -62,6 +56,11 @@ class RabbitMQ implements BrokerInterface
             // make message persistent, so it is not lost if server crashes or quits
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
         ],
+        'queue_name' => 'default',
+        'vhost' => '/',
+        'routing_key' => 'default',
+        // The default exchange is implicitly bound to every queue, with a routing key equal to the queue name
+        'exchange' => '',
     ];
 
     /**
@@ -72,16 +71,12 @@ class RabbitMQ implements BrokerInterface
         int $port,
         string $username,
         string $password,
-        string $queue = 'default',
-        string $exchange = '',
         array $configs = []
     ) {
         $this->server = $server;
         $this->port = $port;
         $this->username = $username;
         $this->password = $password;
-        $this->queue = $queue;
-        $this->exchange = $exchange;
 
         $this->configs['queue'] = array_merge(
             $this->configs['queue'],
@@ -97,6 +92,11 @@ class RabbitMQ implements BrokerInterface
             $this->configs['delivery'],
             isset($configs['delivery']) ? $configs['delivery'] : []
         );
+
+        $this->configs['queue_name'] = (isset($configs['queue_name'])) ? $configs['queue_name'] : $this->configs['queue_name'];
+        $this->configs['vhost'] = (isset($configs['vhost'])) ? $configs['vhost'] : $this->configs['vhost'];
+        $this->configs['routing_key'] = (isset($configs['routing_key'])) ? $configs['routing_key'] : $this->configs['routing_key'];
+        $this->configs['exchange'] = (isset($configs['exchange'])) ? $configs['exchange'] : $this->configs['exchange'];
     }
 
     /**
@@ -109,7 +109,8 @@ class RabbitMQ implements BrokerInterface
                 $this->server,
                 $this->port,
                 $this->username,
-                $this->password
+                $this->password,
+                $this->configs['vhost']
             );
         } catch (\Exception $e) {
             throw new MQConnctionError(sprintf('Error Connecting to Server %s: %s', $this->server, $e->getMessage()));
@@ -128,7 +129,7 @@ class RabbitMQ implements BrokerInterface
             $this->configs['delivery']
         );
 
-        $this->channel->basic_publish($msg, $this->exchange, $this->queue);
+        $this->channel->basic_publish($msg, $this->configs['exchange'], $this->configs['routing_key']);
     }
 
     /**
@@ -144,7 +145,7 @@ class RabbitMQ implements BrokerInterface
         }
 
         $this->channel->basic_consume(
-            $this->queue,
+            $this->configs['queue_name'],
             $this->configs['consumer']['consumer_tag'],
             $this->configs['consumer']['no_local'],
             $this->configs['consumer']['no_ack'],
@@ -197,7 +198,7 @@ class RabbitMQ implements BrokerInterface
         $this->channel = $this->connection->channel();
 
         $this->channel->queue_declare(
-            $this->queue,
+            $this->configs['queue_name'],
             $this->configs['queue']['passive'],
             $this->configs['queue']['durable'],
             $this->configs['queue']['exclusive'],
