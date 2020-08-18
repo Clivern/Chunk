@@ -126,10 +126,11 @@ $password = 'guest';
 $configs = [
     'consumer' => ['no_ack' => true],
 
-    'queue_name' => 'default',
     'vhost' => '/',
-    'routing_key' => 'default',
-    'exchange' => '',
+
+    'queue' => ['name' => 'serviceA_events_orders'],
+    'exchange' => ['name' => 'serviceA_events', 'type' => RabbitMQ::DIRECT_EXCHANGE],
+    'routing' => ['key' => 'serviceA_events_orders'],
 ];
 
 $broker = new RabbitMQ(

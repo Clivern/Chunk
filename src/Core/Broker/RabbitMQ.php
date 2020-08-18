@@ -19,6 +19,11 @@ use PhpAmqpLib\Message\AMQPMessage;
  */
 class RabbitMQ implements BrokerInterface
 {
+    const DIRECT_EXCHANGE = 'direct';
+    const FANOUT_EXCHANGE = 'fanout';
+    const TOPIC_EXCHANGE = 'topic';
+    const HEADERS_EXCHANGE = 'headers';
+
     /** @var string */
     private $server;
 
@@ -39,12 +44,16 @@ class RabbitMQ implements BrokerInterface
 
     /** @var array */
     private $configs = [
+        'vhost' => '/',
+
         'queue' => [
+            'name' => 'chunk',
             'passive' => false,
             'durable' => true,
             'exclusive' => false,
             'auto_delete' => false,
         ],
+
         'consumer' => [
             'consumer_tag' => '',
             'no_local' => false,
@@ -52,15 +61,26 @@ class RabbitMQ implements BrokerInterface
             'exclusive' => false,
             'nowait' => false,
         ],
+
         'delivery' => [
             // make message persistent, so it is not lost if server crashes or quits
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
         ],
-        'queue_name' => 'default',
-        'vhost' => '/',
-        'routing_key' => 'default',
-        // The default exchange is implicitly bound to every queue, with a routing key equal to the queue name
-        'exchange' => '',
+
+        'exchange' => [
+            'name' => 'chunk',
+            'type' => self::DIRECT_EXCHANGE,
+            'passive' => false,
+            'durable' => false,
+            'auto_delete' => true,
+            'internal' => false,
+            'nowait' => false,
+        ],
+
+        'routing' => [
+            'key' => 'chunk',
+            'nowait' => false,
+        ],
     ];
 
     /**
@@ -88,22 +108,23 @@ class RabbitMQ implements BrokerInterface
             isset($configs['consumer']) ? $configs['consumer'] : []
         );
 
+        $this->configs['exchange'] = array_merge(
+            $this->configs['exchange'],
+            isset($configs['exchange']) ? $configs['exchange'] : []
+        );
+
+        $this->configs['routing'] = array_merge(
+            $this->configs['routing'],
+            isset($configs['routing']) ? $configs['routing'] : []
+        );
+
         $this->configs['delivery'] = array_merge(
             $this->configs['delivery'],
             isset($configs['delivery']) ? $configs['delivery'] : []
         );
 
-        $this->configs['queue_name'] = (isset($configs['queue_name']))
-            ? $configs['queue_name'] : $this->configs['queue_name'];
-
         $this->configs['vhost'] = (isset($configs['vhost']))
             ? $configs['vhost'] : $this->configs['vhost'];
-
-        $this->configs['routing_key'] = (isset($configs['routing_key']))
-            ? $configs['routing_key'] : $this->configs['routing_key'];
-
-        $this->configs['exchange'] = (isset($configs['exchange']))
-            ? $configs['exchange'] : $this->configs['exchange'];
     }
 
     /**
@@ -129,14 +150,14 @@ class RabbitMQ implements BrokerInterface
      */
     public function send(MessageInterface $message)
     {
-        $this->declareQueue();
+        $this->declare();
 
         $msg = new AMQPMessage(
             (string) $message,
             $this->configs['delivery']
         );
 
-        $this->channel->basic_publish($msg, $this->configs['exchange'], $this->configs['routing_key']);
+        $this->channel->basic_publish($msg, $this->configs['exchange']['name'], $this->configs['routing']['key']);
     }
 
     /**
@@ -144,7 +165,7 @@ class RabbitMQ implements BrokerInterface
      */
     public function receive($callback)
     {
-        $this->declareQueue();
+        $this->declare();
 
         // if message ack is enabled
         if (!$this->configs['consumer']['no_ack']) {
@@ -152,7 +173,7 @@ class RabbitMQ implements BrokerInterface
         }
 
         $this->channel->basic_consume(
-            $this->configs['queue_name'],
+            $this->configs['queue']['name'],
             $this->configs['consumer']['consumer_tag'],
             $this->configs['consumer']['no_local'],
             $this->configs['consumer']['no_ack'],
@@ -200,16 +221,36 @@ class RabbitMQ implements BrokerInterface
      *
      * @return void
      */
-    private function declareQueue()
+    private function declare()
     {
         $this->channel = $this->connection->channel();
 
+        // Declare Queue
         $this->channel->queue_declare(
-            $this->configs['queue_name'],
+            $this->configs['queue']['name'],
             $this->configs['queue']['passive'],
             $this->configs['queue']['durable'],
             $this->configs['queue']['exclusive'],
             $this->configs['queue']['auto_delete']
+        );
+
+        // Declare Exchange
+        $this->channel->exchange_declare(
+            $this->configs['exchange']['name'],
+            $this->configs['exchange']['type'],
+            $this->configs['exchange']['passive'],
+            $this->configs['exchange']['durable'],
+            $this->configs['exchange']['auto_delete'],
+            $this->configs['exchange']['internal'],
+            $this->configs['exchange']['nowait']
+        );
+
+        // Binding
+        $this->channel->queue_bind(
+            $this->configs['queue']['name'],
+            $this->configs['exchange']['name'],
+            $this->configs['routing']['key'],
+            $this->configs['routing']['nowait']
         );
     }
 }
