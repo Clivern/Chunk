@@ -19,6 +19,11 @@ use PhpAmqpLib\Message\AMQPMessage;
  */
 class RabbitMQ implements BrokerInterface
 {
+    const DIRECT_EXCHANGE = 'direct';
+    const FANOUT_EXCHANGE = 'fanout';
+    const TOPIC_EXCHANGE = 'topic';
+    const HEADERS_EXCHANGE = 'headers';
+
     /** @var string */
     private $server;
 
@@ -42,7 +47,7 @@ class RabbitMQ implements BrokerInterface
         'vhost' => '/',
 
         'queue' => [
-            'name' => 'default',
+            'name' => 'chunk',
             'passive' => false,
             'durable' => true,
             'exclusive' => false,
@@ -63,10 +68,8 @@ class RabbitMQ implements BrokerInterface
         ],
 
         'exchange' => [
-            // The default exchange is implicitly bound to every queue,
-            // with a routing key equal to the queue name
-            'name' => '',
-            'type' => 'direct',
+            'name' => 'chunk',
+            'type' => self::DIRECT_EXCHANGE,
             'passive' => false,
             'durable' => false,
             'auto_delete' => true,
@@ -75,7 +78,7 @@ class RabbitMQ implements BrokerInterface
         ],
 
         'routing' => [
-            'key' => 'default',
+            'key' => 'chunk',
             'nowait' => false,
         ],
     ];
