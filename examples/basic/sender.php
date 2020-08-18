@@ -63,10 +63,10 @@ $password = 'guest';
 $configs = [
     'consumer' => ['no_ack' => true],
 
-    'queue_name' => 'default',
+    'queue' => ['name' => 'default'],
     'vhost' => '/',
-    'routing_key' => 'default',
-    'exchange' => '',
+    'routing' => ['key' => 'default'],
+    'exchange' => ['name' => '', 'type' => 'direct'],
 ];
 
 $broker = new RabbitMQ(
