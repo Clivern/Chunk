@@ -60,7 +60,7 @@ class RabbitMQ implements BrokerInterface
         ],
         'delivery' => [
             // make message persistent, so it is not lost if server crashes or quits
-            'delivery_mode' => 2,
+            'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
         ],
     ];
 
@@ -138,6 +138,11 @@ class RabbitMQ implements BrokerInterface
     {
         $this->declareQueue();
 
+        // if message ack is enabled
+        if (!$this->configs['consumer']['no_ack']) {
+            $this->channel->basic_qos(null, 1, null);
+        }
+
         $this->channel->basic_consume(
             $this->queue,
             $this->configs['consumer']['consumer_tag'],
@@ -159,6 +164,14 @@ class RabbitMQ implements BrokerInterface
     public function isConnected(): bool
     {
         return $this->connection->isConnected();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfigs(): array
+    {
+        return $this->configs;
     }
 
     /**

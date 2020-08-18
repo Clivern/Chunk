@@ -105,6 +105,13 @@ class Listener implements ListenerInterface
                 );
             }
         }
+
+        // if message ack is enabled
+        if (!$this->broker->getConfigs()['consumer']['no_ack']) {
+            $message->delivery_info['channel']->basic_ack(
+                $message->delivery_info['delivery_tag']
+            );
+        }
     }
 
     /**

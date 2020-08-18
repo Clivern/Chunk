@@ -41,6 +41,11 @@ interface BrokerInterface
     public function isConnected(): bool;
 
     /**
+     * Get Broker Configs.
+     */
+    public function getConfigs(): array;
+
+    /**
      * Disconnect.
      */
     public function disconnect();

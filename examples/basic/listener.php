@@ -119,7 +119,7 @@ class ProcessOrderMessageHandler implements MessageHandlerInterface
     }
 }
 
-$broker = new RabbitMQ('127.0.0.1', 5672, 'guest', 'guest');
+$broker = new RabbitMQ('127.0.0.1', 5672, 'guest', 'guest', 'default', '', ['consumer' => ['no_ack' => false]]);
 
 $eventHandler = new EventHandler();
 $eventHandler->addEvent(new MessageReceivedEvent())
