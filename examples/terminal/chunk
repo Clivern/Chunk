@@ -1,0 +1,233 @@
+#!/usr/bin/env php
+<?php
+/*
+ * This file is part of Chunk - Asynchronous Task Queue Based on Distributed Message Passing for PHP
+ * (c) Clivern <hello@clivern.com>
+ */
+
+include_once __DIR__.'/vendor/autoload.php';
+
+use Clivern\Chunk\Contract\EventInterface;
+use Clivern\Chunk\Contract\MessageInterface;
+use Clivern\Chunk\Core\Broker\RabbitMQ;
+use Clivern\Chunk\Core\EventHandler;
+use Clivern\Chunk\Core\Message;
+use Clivern\Chunk\Core\Sender;
+use Clivern\Chunk\Core\Listener;
+use Clivern\Chunk\Core\Mapper;
+use Clivern\Chunk\Contract\MessageHandlerInterface;
+
+
+$options = [
+    "role" => "listener",
+    "server" => '127.0.0.1',
+    "username" => 'guest',
+    "password" => 'guest',
+    "port" => 5672,
+    "queue_name" => 'serviceA_events_orders',
+    "exchange_name" => 'serviceA_events',
+    "exchange_type" => RabbitMQ::DIRECT_EXCHANGE,
+    "routing_key" => 'serviceA_events_orders',
+    "vhost" => '/',
+    "ack" => false,
+    "message" => 'something'
+];
+
+foreach ($argv as $item) {
+    if (strpos($item, "=")) {
+        $item = explode("=", $item);
+        $options[$item[0]] = $item[1];
+    }
+}
+
+////////////////////////
+// Create Event Handlers
+////////////////////////
+class MessageReceivedEvent implements EventInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return EventInterface::ON_MESSAGE_RECEIVED_EVENT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function invoke(MessageInterface $message, $exception = null)
+    {
+        var_dump(sprintf('Message Received Event: %s', (string) $message));
+    }
+}
+
+class MessageFailedEvent implements EventInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return EventInterface::ON_MESSAGE_FAILED_EVENT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function invoke(MessageInterface $message, $exception = null)
+    {
+        var_dump(sprintf('Message Failed Event: %s', (string) $message));
+    }
+}
+
+class MessageHandledEvent implements EventInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return EventInterface::ON_MESSAGE_HANDLED_EVENT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function invoke(MessageInterface $message, $exception = null)
+    {
+        var_dump(sprintf('Message Handled Event: %s', (string) $message));
+    }
+}
+
+class MessageSentEvent implements EventInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return EventInterface::ON_MESSAGE_SENT_EVENT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function invoke(MessageInterface $message, $exception = null)
+    {
+        var_dump(sprintf('Message Sent Event: %s', (string) $message));
+    }
+}
+
+class MessageSendFailureEvent implements EventInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getType(): string
+    {
+        return EventInterface::ON_MESSAGE_SEND_FAILURE_EVENT;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function invoke(MessageInterface $message, $exception = null)
+    {
+        var_dump(sprintf('Message Send Failure Event: %s', (string) $message));
+        var_dump(sprintf('Error raised: %s', $exception->getMessage()));
+    }
+}
+
+//////////////////////////
+// Create Message Handlers
+//////////////////////////
+class ProcessOrderMessageHandler implements MessageHandlerInterface
+{
+    /**
+     * Invoke Handler.
+     */
+    public function invoke(MessageInterface $message): MessageHandlerInterface
+    {
+        var_dump(sprintf('Process Message: %s', (string) $message));
+
+        return $this;
+    }
+
+    /**
+     * onSuccess Event.
+     *
+     * @return void
+     */
+    public function onSuccess()
+    {
+        var_dump('Operation Succeeded');
+    }
+
+    /**
+     * onFailure Event.
+     *
+     * @return void
+     */
+    public function onFailure()
+    {
+        var_dump('Operation Failed');
+    }
+
+    /**
+     * Handler Type.
+     */
+    public function getType(): string
+    {
+        return 'serviceA.processOrder';
+    }
+}
+
+$configs = [
+    'consumer' => ['no_ack' => !$options['ack']],
+
+    'vhost' => $options['vhost'],
+
+    'queue' => ['name' => $options['queue_name']],
+    'exchange' => ['name' => $options['exchange_name'], 'type' => $options['exchange_type']],
+    'routing' => ['key' => $options['routing_key']],
+];
+
+$broker = new RabbitMQ(
+    $options['server'],
+    $options['port'],
+    $options['username'],
+    $options['password'],
+    $configs
+);
+
+$eventHandler = new EventHandler();
+$eventHandler->addEvent(new MessageReceivedEvent())
+             ->addEvent(new MessageFailedEvent())
+             ->addEvent(new MessageHandledEvent())
+             ->addEvent(new MessageSentEvent())
+             ->addEvent(new MessageSendFailureEvent());
+
+$mapper = new Mapper();
+$mapper->addHandler(new ProcessOrderMessageHandler());
+
+if ($options['role'] == "sender") {
+    $sender = new Sender($broker, $eventHandler);
+
+    $sender->connect();
+
+    $message = new Message();
+    $message->setId(1)
+            ->setPayload($options['message'])
+            ->setHandlerType('serviceA.processOrder');
+
+    $sender->send($message);
+    $sender->disconnect();
+} else {
+    $listener = new Listener($broker, $eventHandler, $mapper);
+
+    $listener->connect();
+    $listener->listen();
+    $listener->disconnect();
+}
+
