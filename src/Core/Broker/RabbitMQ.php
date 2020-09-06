@@ -47,7 +47,7 @@ class RabbitMQ implements BrokerInterface
         'vhost' => '/',
 
         'queue' => [
-            'name' => 'chunk',
+            'name' => '',
             'passive' => false,
             'durable' => true,
             'exclusive' => false,
@@ -68,7 +68,7 @@ class RabbitMQ implements BrokerInterface
         ],
 
         'exchange' => [
-            'name' => 'chunk',
+            'name' => '',
             'type' => self::DIRECT_EXCHANGE,
             'passive' => false,
             'durable' => false,
@@ -78,7 +78,7 @@ class RabbitMQ implements BrokerInterface
         ],
 
         'routing' => [
-            'key' => 'chunk',
+            'key' => '',
             'nowait' => false,
         ],
     ];
@@ -225,8 +225,23 @@ class RabbitMQ implements BrokerInterface
     {
         $this->channel = $this->connection->channel();
 
+        $queue_name = '';
+
+        if (!empty($this->configs['exchange']['name'])) {
+            // Declare Exchange
+            $this->channel->exchange_declare(
+                $this->configs['exchange']['name'],
+                $this->configs['exchange']['type'],
+                $this->configs['exchange']['passive'],
+                $this->configs['exchange']['durable'],
+                $this->configs['exchange']['auto_delete'],
+                $this->configs['exchange']['internal'],
+                $this->configs['exchange']['nowait']
+            );
+        }
+
         // Declare Queue
-        $this->channel->queue_declare(
+        list($queue_name) = $this->channel->queue_declare(
             $this->configs['queue']['name'],
             $this->configs['queue']['passive'],
             $this->configs['queue']['durable'],
@@ -234,20 +249,13 @@ class RabbitMQ implements BrokerInterface
             $this->configs['queue']['auto_delete']
         );
 
-        // Declare Exchange
-        $this->channel->exchange_declare(
-            $this->configs['exchange']['name'],
-            $this->configs['exchange']['type'],
-            $this->configs['exchange']['passive'],
-            $this->configs['exchange']['durable'],
-            $this->configs['exchange']['auto_delete'],
-            $this->configs['exchange']['internal'],
-            $this->configs['exchange']['nowait']
-        );
+        if (empty($queue_name) || empty($this->configs['exchange']['name'])) {
+            return;
+        }
 
         // Binding
         $this->channel->queue_bind(
-            $this->configs['queue']['name'],
+            $queue_name,
             $this->configs['exchange']['name'],
             $this->configs['routing']['key'],
             $this->configs['routing']['nowait']

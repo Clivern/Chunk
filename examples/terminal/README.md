@@ -1,22 +1,18 @@
 
 
-### Direct Exchange
+### Work Queues
 
 ```zsh
 $ ./examples/terminal/chunk \
     role=listener \
     server=127.0.0.1 \
     queue_name=serviceA_events_orders \
-    exchange_name=serviceA_events \
-    exchange_type=direct \
     routing_key=serviceA_events_orders
 
 $ ./examples/terminal/chunk \
     role=sender \
     server=127.0.0.1 \
     queue_name=serviceA_events_orders \
-    exchange_name=serviceA_events \
-    exchange_type=direct \
     routing_key=serviceA_events_orders \
     message=something
 ```
