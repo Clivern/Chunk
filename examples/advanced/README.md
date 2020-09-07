@@ -1,9 +1,9 @@
-## Exchanges Types
+## Exchange Types
 
 
 Install chunk via composer
 
-```
+```php
 $ composer install
 ```
 
@@ -12,7 +12,7 @@ $ composer install
 
 In this case messages are routed to the queue with the name specified by `routing_key`, if it exists.
 
-```zsh
+```php
 $ ./chunk \
     role=listener \
     server=127.0.0.1 \
@@ -32,7 +32,7 @@ $ ./chunk \
 
 A direct exchange delivers messages to queues based on a message routing key. The routing key is a message attribute added to the message header by the producer. Think of the routing key as an "address" that the exchange is using to decide how to route the message. A message goes to the queue(s) with the binding key that exactly matches the routing key of the message.
 
-```zsh
+```php
 # Three Listeners
 $ ./chunk \
     role=listener \
@@ -91,7 +91,7 @@ A fanout exchange copies and routes a received message to all queues that are bo
 
 Fanout exchanges can be useful when the same message needs to be sent to one or more queues with consumers who may process the same message in different ways.
 
-```zsh
+```php
 # Three Listeners
 $ ./chunk \
     role=listener \
@@ -129,7 +129,7 @@ $ ./chunk \
 Topic exchanges route messages to queues based on wildcard matches between the routing key and the routing pattern, which is specified by the queue binding. Messages are routed to one or many queues based on a matching between a message routing key and this pattern.
 
 
-```zsh
+```php
 # Three Listeners
 $ ./chunk \
     role=listener \
@@ -186,5 +186,5 @@ $ ./chunk \
 
 A headers exchange routes messages based on arguments containing headers and optional values. Headers exchanges are very similar to topic exchanges, but route messages based on header values instead of routing keys. A message matches if the value of the header equals the value specified upon binding.
 
-```zsh
+```php
 ```
