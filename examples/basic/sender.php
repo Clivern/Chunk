@@ -66,7 +66,7 @@ $configs = [
     'vhost' => '/',
 
     'queue' => ['name' => 'serviceA_events_orders'],
-    'routing' => ['key' => 'serviceA_events_orders'],
+    'routing' => ['key' => ['serviceA_events_orders']],
 ];
 
 $broker = new RabbitMQ(

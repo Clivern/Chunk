@@ -5,7 +5,7 @@
  * (c) Clivern <hello@clivern.com>
  */
 
-include_once './vendor/autoload.php';
+include_once __DIR__.'/vendor/autoload.php';
 
 use Clivern\Chunk\Contract\EventInterface;
 use Clivern\Chunk\Contract\MessageInterface;
@@ -24,10 +24,11 @@ $options = [
     "username" => 'guest',
     "password" => 'guest',
     "port" => 5672,
-    "queue_name" => 'serviceA_events_orders',
+    "queue_name" => '',
     "exchange_name" => '',
     "exchange_type" => '',
     "routing_key" => '',
+    'queue_exclusive' => false,
     "vhost" => '/',
     "ack" => false,
     "message" => 'something'
@@ -188,9 +189,9 @@ $configs = [
 
     'vhost' => $options['vhost'],
 
-    'queue' => ['name' => $options['queue_name']],
+    'queue' => ['name' => $options['queue_name'], 'exclusive' => $options['queue_exclusive']],
     'exchange' => ['name' => $options['exchange_name'], 'type' => $options['exchange_type']],
-    'routing' => ['key' => $options['routing_key']],
+    'routing' => ['key' => explode(",", $options['routing_key'])],
 ];
 
 $broker = new RabbitMQ(

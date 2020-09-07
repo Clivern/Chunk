@@ -78,7 +78,7 @@ class RabbitMQ implements BrokerInterface
         ],
 
         'routing' => [
-            'key' => '',
+            'key' => [''],
             'nowait' => false,
         ],
     ];
@@ -157,7 +157,13 @@ class RabbitMQ implements BrokerInterface
             $this->configs['delivery']
         );
 
-        $this->channel->basic_publish($msg, $this->configs['exchange']['name'], $this->configs['routing']['key']);
+        $key = (isset($this->configs['routing']['key'][0])) ? $this->configs['routing']['key'][0] : '';
+
+        $this->channel->basic_publish(
+            $msg,
+            $this->configs['exchange']['name'],
+            $key
+        );
     }
 
     /**
@@ -253,12 +259,13 @@ class RabbitMQ implements BrokerInterface
             return;
         }
 
-        // Binding
-        $this->channel->queue_bind(
-            $queue_name,
-            $this->configs['exchange']['name'],
-            $this->configs['routing']['key'],
-            $this->configs['routing']['nowait']
-        );
+        foreach ($this->configs['routing']['key'] as $key) {
+            $this->channel->queue_bind(
+                $queue_name,
+                $this->configs['exchange']['name'],
+                $key,
+                $this->configs['routing']['nowait']
+            );
+        }
     }
 }
