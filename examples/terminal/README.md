@@ -1,6 +1,8 @@
+## Exchanges Types
 
+### Default or Nameless Exchange:
 
-### Work Queues
+In this case messages are routed to the queue with the name specified by routing_key, if it exists.
 
 ```zsh
 $ ./examples/terminal/chunk \
@@ -17,71 +19,15 @@ $ ./examples/terminal/chunk \
     message=something
 ```
 
+
+### Direct Exchange
+
+
+### Fanout Exchange
+
+
 ### Topic Exchange
 
-Subscriber: listens to all messages sent to `serviceB.events.*`
 
-```zsh
-$ ./examples/terminal/chunk \
-    role=listener \
-    server=127.0.0.1 \
-    queue_name=serviceB_events_orders \
-    exchange_name=serviceB_events \
-    exchange_type=topic \
-    routing_key='serviceB.events.*'
+### Headers Exchange
 
-$ ./examples/terminal/chunk \
-    role=sender \
-    server=127.0.0.1 \
-    queue_name=serviceB_events_orders \
-    exchange_name=serviceB_events \
-    exchange_type=topic \
-    routing_key=serviceB.events.newOrders \
-    message=newOrder
-
-$ ./examples/terminal/chunk \
-    role=sender \
-    server=127.0.0.1 \
-    queue_name=serviceB_events_orders \
-    exchange_name=serviceB_events \
-    exchange_type=topic \
-    routing_key=serviceB.events.cancelOrders \
-    message=cancelOrder
-```
-
-```zsh
-$ ./examples/terminal/chunk \
-    role=listener \
-    server=127.0.0.1 \
-    queue_name=serviceB_events_orders \
-    exchange_name=serviceB_events \
-    exchange_type=topic \
-    routing_key='*.newOrders'
-
-$ ./examples/terminal/chunk \
-    role=sender \
-    server=127.0.0.1 \
-    queue_name=serviceB_events_orders \
-    exchange_name=serviceB_events \
-    exchange_type=topic \
-    routing_key=serviceC.events.newOrders \
-    message=newOrder
-
-$ ./examples/terminal/chunk \
-    role=sender \
-    server=127.0.0.1 \
-    queue_name=serviceB_events_orders \
-    exchange_name=serviceB_events \
-    exchange_type=topic \
-    routing_key=serviceD.events.newOrders \
-    message=newOrder
-
-$ ./examples/terminal/chunk \
-    role=sender \
-    server=127.0.0.1 \
-    queue_name=serviceB_events_orders \
-    exchange_name=serviceB_events \
-    exchange_type=topic \
-    routing_key='serviceE.events.cancelOrders' \
-    message=cancelOrder
-```
