@@ -144,7 +144,7 @@ $ ./chunk \
     server=127.0.0.1 \
     exchange_name=serviceA_events_logs \
     queue_exclusive=true \
-    routing_key=log.accounts.* \
+    routing_key='log.accounts.*' \
     exchange_type=topic
 
 $ ./chunk \
@@ -152,7 +152,7 @@ $ ./chunk \
     server=127.0.0.1 \
     exchange_name=serviceA_events_logs \
     queue_exclusive=true \
-    routing_key=log.payment.* \
+    routing_key='log.payment.*' \
     exchange_type=topic
 
 # Senders
