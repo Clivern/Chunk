@@ -129,8 +129,7 @@ $configs = [
     'vhost' => '/',
 
     'queue' => ['name' => 'serviceA_events_orders'],
-    'exchange' => ['name' => 'serviceA_events', 'type' => RabbitMQ::DIRECT_EXCHANGE],
-    'routing' => ['key' => 'serviceA_events_orders'],
+    'routing' => ['key' => ['serviceA_events_orders']],
 ];
 
 $broker = new RabbitMQ(
