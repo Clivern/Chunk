@@ -185,13 +185,25 @@ class ProcessOrderMessageHandler implements MessageHandlerInterface
 }
 
 $configs = [
-    'consumer' => ['no_ack' => !$options['ack']],
+    'consumer' => [
+        'no_ack' => !$options['ack']
+    ],
 
     'vhost' => $options['vhost'],
 
-    'queue' => ['name' => $options['queue_name'], 'exclusive' => $options['queue_exclusive']],
-    'exchange' => ['name' => $options['exchange_name'], 'type' => $options['exchange_type']],
-    'routing' => ['key' => explode(",", $options['routing_key'])],
+    'queue' => [
+        'name' => $options['queue_name'],
+        'exclusive' => $options['queue_exclusive']
+    ],
+
+    'exchange' => [
+        'name' => $options['exchange_name'],
+        'type' => $options['exchange_type']
+    ],
+
+    'routing' => [
+        'key' => explode(",", $options['routing_key'])
+    ],
 ];
 
 $broker = new RabbitMQ(

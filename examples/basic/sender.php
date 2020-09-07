@@ -61,12 +61,19 @@ $port = 5672;
 $username = 'guest';
 $password = 'guest';
 $configs = [
-    'consumer' => ['no_ack' => true],
+    'consumer' => [
+        'no_ack' => true
+    ],
 
     'vhost' => '/',
 
-    'queue' => ['name' => 'serviceA_events_orders'],
-    'routing' => ['key' => ['serviceA_events_orders']],
+    'queue' => [
+        'name' => 'serviceA_events_orders'
+    ],
+
+    'routing' => [
+        'key' => ['serviceA_events_orders']
+    ],
 ];
 
 $broker = new RabbitMQ(
