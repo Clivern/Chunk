@@ -14,11 +14,11 @@ namespace Clivern\Chunk\Contract;
  */
 interface EventInterface
 {
-    const ON_MESSAGE_SENT_EVENT = 'onMessageSentEvent';
-    const ON_MESSAGE_RECEIVED_EVENT = 'onMessageReceivedEvent';
-    const ON_MESSAGE_HANDLED_EVENT = 'onMessageHandledEvent';
-    const ON_MESSAGE_FAILED_EVENT = 'onMessageFailedEvent';
-    const ON_MESSAGE_SEND_FAILURE_EVENT = 'onMessageSendFailureEvent';
+    public const ON_MESSAGE_SENT_EVENT = 'onMessageSentEvent';
+    public const ON_MESSAGE_RECEIVED_EVENT = 'onMessageReceivedEvent';
+    public const ON_MESSAGE_HANDLED_EVENT = 'onMessageHandledEvent';
+    public const ON_MESSAGE_FAILED_EVENT = 'onMessageFailedEvent';
+    public const ON_MESSAGE_SEND_FAILURE_EVENT = 'onMessageSendFailureEvent';
 
     /**
      * Get Event Type.

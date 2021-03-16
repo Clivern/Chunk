@@ -3,3 +3,6 @@ coverage.clover
 .php_cs.cache
 build
 vendor
+composer.lock
+.phpunit.result.cache
+.php-cs-fixer.cache

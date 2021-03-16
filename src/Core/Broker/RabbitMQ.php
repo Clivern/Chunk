@@ -19,10 +19,10 @@ use PhpAmqpLib\Message\AMQPMessage;
  */
 class RabbitMQ implements BrokerInterface
 {
-    const DIRECT_EXCHANGE = 'direct';
-    const FANOUT_EXCHANGE = 'fanout';
-    const TOPIC_EXCHANGE = 'topic';
-    const HEADERS_EXCHANGE = 'headers';
+    public const DIRECT_EXCHANGE = 'direct';
+    public const FANOUT_EXCHANGE = 'fanout';
+    public const TOPIC_EXCHANGE = 'topic';
+    public const HEADERS_EXCHANGE = 'headers';
 
     /** @var string */
     private $server;

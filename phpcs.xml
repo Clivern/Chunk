@@ -4,4 +4,10 @@
     <file>src</file>
     <file>tests</file>
     <rule ref="PSR2" />
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="160"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
 </ruleset>

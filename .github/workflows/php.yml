@@ -1,0 +1,25 @@
+name: CI Build
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [ '7.4' ]
+    name: Run CI PHP ${{ matrix.php }}
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup PHP
+        uses: nanasess/setup-php@master
+        with:
+          php-version: ${{ matrix.php }}
+      - run: php -v
+
+      - name: Run CI
+        run: |
+          composer validate
+          make ci
