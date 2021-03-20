@@ -34,10 +34,10 @@ class Message implements MessageInterface
     public function __toString()
     {
         return json_encode([
-            'id' => $this->id,
-            'uuid' => $this->uuid,
+            'id'      => $this->id,
+            'uuid'    => $this->uuid,
             'payload' => $this->payload,
-            'type' => $this->type,
+            'type'    => $this->type,
         ]);
     }
 
@@ -46,11 +46,11 @@ class Message implements MessageInterface
      */
     public function fromString(string $data): MessageInterface
     {
-        $data = json_decode($data);
-        $this->id = $data->id;
-        $this->uuid = $data->uuid;
+        $data          = json_decode($data);
+        $this->id      = $data->id;
+        $this->uuid    = $data->uuid;
         $this->payload = $data->payload;
-        $this->type = $data->type;
+        $this->type    = $data->type;
 
         return $this;
     }

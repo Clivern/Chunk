@@ -16,8 +16,6 @@ interface MessageInterface
 {
     /**
      * Load from string.
-     *
-     * @return void
      */
     public function fromString(string $data): self;
 

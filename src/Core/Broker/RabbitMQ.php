@@ -19,9 +19,9 @@ use PhpAmqpLib\Message\AMQPMessage;
  */
 class RabbitMQ implements BrokerInterface
 {
-    public const DIRECT_EXCHANGE = 'direct';
-    public const FANOUT_EXCHANGE = 'fanout';
-    public const TOPIC_EXCHANGE = 'topic';
+    public const DIRECT_EXCHANGE  = 'direct';
+    public const FANOUT_EXCHANGE  = 'fanout';
+    public const TOPIC_EXCHANGE   = 'topic';
     public const HEADERS_EXCHANGE = 'headers';
 
     /** @var string */
@@ -47,19 +47,19 @@ class RabbitMQ implements BrokerInterface
         'vhost' => '/',
 
         'queue' => [
-            'name' => '',
-            'passive' => false,
-            'durable' => true,
-            'exclusive' => false,
+            'name'        => '',
+            'passive'     => false,
+            'durable'     => true,
+            'exclusive'   => false,
             'auto_delete' => false,
         ],
 
         'consumer' => [
             'consumer_tag' => '',
-            'no_local' => false,
-            'no_ack' => true,
-            'exclusive' => false,
-            'nowait' => false,
+            'no_local'     => false,
+            'no_ack'       => true,
+            'exclusive'    => false,
+            'nowait'       => false,
         ],
 
         'delivery' => [
@@ -68,17 +68,17 @@ class RabbitMQ implements BrokerInterface
         ],
 
         'exchange' => [
-            'name' => '',
-            'type' => self::DIRECT_EXCHANGE,
-            'passive' => false,
-            'durable' => false,
+            'name'        => '',
+            'type'        => self::DIRECT_EXCHANGE,
+            'passive'     => false,
+            'durable'     => false,
             'auto_delete' => true,
-            'internal' => false,
-            'nowait' => false,
+            'internal'    => false,
+            'nowait'      => false,
         ],
 
         'routing' => [
-            'key' => [''],
+            'key'    => [''],
             'nowait' => false,
         ],
     ];
@@ -93,34 +93,34 @@ class RabbitMQ implements BrokerInterface
         string $password,
         array $configs = []
     ) {
-        $this->server = $server;
-        $this->port = $port;
+        $this->server   = $server;
+        $this->port     = $port;
         $this->username = $username;
         $this->password = $password;
 
         $this->configs['queue'] = array_merge(
             $this->configs['queue'],
-            isset($configs['queue']) ? $configs['queue'] : []
+            $configs['queue'] ?? []
         );
 
         $this->configs['consumer'] = array_merge(
             $this->configs['consumer'],
-            isset($configs['consumer']) ? $configs['consumer'] : []
+            $configs['consumer'] ?? []
         );
 
         $this->configs['exchange'] = array_merge(
             $this->configs['exchange'],
-            isset($configs['exchange']) ? $configs['exchange'] : []
+            $configs['exchange'] ?? []
         );
 
         $this->configs['routing'] = array_merge(
             $this->configs['routing'],
-            isset($configs['routing']) ? $configs['routing'] : []
+            $configs['routing'] ?? []
         );
 
         $this->configs['delivery'] = array_merge(
             $this->configs['delivery'],
-            isset($configs['delivery']) ? $configs['delivery'] : []
+            $configs['delivery'] ?? []
         );
 
         $this->configs['vhost'] = (isset($configs['vhost']))
@@ -217,6 +217,7 @@ class RabbitMQ implements BrokerInterface
         if (!empty($this->channel)) {
             $this->channel->close();
         }
+
         if (!empty($this->connection)) {
             $this->connection->close();
         }
@@ -224,8 +225,6 @@ class RabbitMQ implements BrokerInterface
 
     /**
      * Declare Queue.
-     *
-     * @return void
      */
     private function declare()
     {
@@ -247,7 +246,7 @@ class RabbitMQ implements BrokerInterface
         }
 
         // Declare Queue
-        list($queue_name) = $this->channel->queue_declare(
+        [$queue_name] = $this->channel->queue_declare(
             $this->configs['queue']['name'],
             $this->configs['queue']['passive'],
             $this->configs['queue']['durable'],

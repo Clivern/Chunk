@@ -23,15 +23,11 @@ interface MessageHandlerInterface
 
     /**
      * onSuccess Event.
-     *
-     * @return void
      */
     public function onSuccess();
 
     /**
      * onFailure Event.
-     *
-     * @return void
      */
     public function onFailure();
 

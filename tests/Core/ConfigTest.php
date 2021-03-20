@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Chunk - Asynchronous Task Queue Based on Distributed Message Passing for PHP
  * (c) Clivern <hello@clivern.com>
@@ -18,10 +20,10 @@ class ConfigTest extends TestCase
     public function testConfig()
     {
         $config = new Config();
-        $this->assertTrue($config instanceof Config);
+        self::assertTrue($config instanceof Config);
         $config->set('key', 'value');
-        $this->assertSame('value', $config->get('key', null));
-        $this->assertTrue($config->exists('key'));
-        $this->assertFalse($config->exists('not_found'));
+        self::assertSame('value', $config->get('key', null));
+        self::assertTrue($config->exists('key'));
+        self::assertFalse($config->exists('not_found'));
     }
 }

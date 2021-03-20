@@ -47,9 +47,9 @@ class Listener implements ListenerInterface
         MapperInterface $mapper,
         $messageObj = null
     ) {
-        $this->broker = $broker;
+        $this->broker       = $broker;
         $this->eventHandler = $eventHandler;
-        $this->mapper = $mapper;
+        $this->mapper       = $mapper;
 
         if (!empty($messageObj) && $messageObj instanceof MessageInterface) {
             $this->messageObj = $messageObj;
@@ -73,8 +73,6 @@ class Listener implements ListenerInterface
      * Message callback.
      *
      * @param object $message
-     *
-     * @return void
      */
     public function callback($message)
     {

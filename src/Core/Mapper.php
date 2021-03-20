@@ -79,6 +79,7 @@ class Mapper implements MapperInterface
             $handler->onSuccess();
         } catch (Exception $e) {
             $handler->onFailure();
+
             throw new MessageHandlerFailed($e->getMessage());
         }
 

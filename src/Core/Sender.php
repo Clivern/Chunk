@@ -37,7 +37,7 @@ class Sender implements SenderInterface
         BrokerInterface $broker,
         EventHandlerInterface $eventHandler
     ) {
-        $this->broker = $broker;
+        $this->broker       = $broker;
         $this->eventHandler = $eventHandler;
     }
 

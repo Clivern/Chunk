@@ -7,13 +7,11 @@ composer:
 
 
 fix:
-	vendor/bin/php-cs-fixer fix src
-	vendor/bin/php-cs-fixer fix tests
+	vendor/bin/php-cs-fixer fix
 
 
 fix-diff:
-	./vendor/bin/php-cs-fixer fix src --diff --dry-run -v
-	./vendor/bin/php-cs-fixer fix tests --diff --dry-run -v
+	./vendor/bin/php-cs-fixer fix --diff --dry-run -v
 
 
 test: composer

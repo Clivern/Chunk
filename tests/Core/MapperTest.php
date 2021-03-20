@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Chunk - Asynchronous Task Queue Based on Distributed Message Passing for PHP
  * (c) Clivern <hello@clivern.com>
@@ -22,84 +24,84 @@ class MapperTest extends TestCase
 {
     public function testHasHandler()
     {
-        $mapper = new Mapper();
+        $mapper  = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
 
-        $handler->expects($this->exactly(2))
+        $handler->expects(self::exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $this->assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
-        $this->assertTrue($mapper->hasHandler('serviceA.processOrderHandler'));
-        $this->assertFalse($mapper->hasHandler('serviceA.processPaymentHandler'));
+        self::assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
+        self::assertTrue($mapper->hasHandler('serviceA.processOrderHandler'));
+        self::assertFalse($mapper->hasHandler('serviceA.processPaymentHandler'));
     }
 
     public function testGetHandler()
     {
-        $mapper = new Mapper();
+        $mapper  = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
 
-        $handler->expects($this->exactly(2))
+        $handler->expects(self::exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $this->assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
-        $this->assertInstanceOf(MessageHandlerInterface::class, $mapper->getHandler('serviceA.processOrderHandler'));
+        self::assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
+        self::assertInstanceOf(MessageHandlerInterface::class, $mapper->getHandler('serviceA.processOrderHandler'));
 
         $this->expectException(MessageHandlerNotFound::class);
-        $this->assertInstanceOf(MessageHandlerInterface::class, $mapper->getHandler('serviceA.processPaymentHandler'));
+        self::assertInstanceOf(MessageHandlerInterface::class, $mapper->getHandler('serviceA.processPaymentHandler'));
     }
 
     public function testCallHandler()
     {
-        $mapper = new Mapper();
+        $mapper  = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
         $message = $this->createMock(MessageInterface::class);
 
-        $message->expects($this->once())
+        $message->expects(self::once())
             ->method('getHandlerType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $handler->expects($this->exactly(2))
+        $handler->expects(self::exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $handler->expects($this->once())
+        $handler->expects(self::once())
             ->method('invoke')
             ->with($message);
 
-        $handler->expects($this->once())
+        $handler->expects(self::once())
             ->method('onSuccess');
 
-        $this->assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
-        $this->assertTrue($mapper->callHandler($message));
+        self::assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
+        self::assertTrue($mapper->callHandler($message));
     }
 
     public function testCallHandlerFailure()
     {
-        $mapper = new Mapper();
+        $mapper  = new Mapper();
         $handler = $this->createMock(MessageHandlerInterface::class);
         $message = $this->createMock(MessageInterface::class);
 
-        $message->expects($this->once())
+        $message->expects(self::once())
             ->method('getHandlerType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $handler->expects($this->exactly(2))
+        $handler->expects(self::exactly(2))
             ->method('getType')
             ->willReturn('serviceA.processOrderHandler');
 
-        $handler->expects($this->once())
+        $handler->expects(self::once())
             ->method('invoke')
             ->with($message)
-            ->will($this->throwException(new \Exception('Failure')));
+            ->will(self::throwException(new \Exception('Failure')));
 
-        $handler->expects($this->once())
+        $handler->expects(self::once())
             ->method('onFailure');
 
-        $this->assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
+        self::assertInstanceOf(MapperInterface::class, $mapper->addHandler($handler));
 
         $this->expectException(MessageHandlerFailed::class);
-        $this->assertTrue($mapper->callHandler($message));
+        self::assertTrue($mapper->callHandler($message));
     }
 }

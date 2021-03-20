@@ -21,8 +21,6 @@ interface BrokerInterface
 
     /**
      * Send a message to queue.
-     *
-     * @return void
      */
     public function send(MessageInterface $message);
 
@@ -30,8 +28,6 @@ interface BrokerInterface
      * Receive messages from a queue.
      *
      * @param mixed $callback
-     *
-     * @return void
      */
     public function receive($callback);
 

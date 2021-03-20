@@ -30,8 +30,6 @@ interface EventHandlerInterface
      * Invoke an event with a message as parameter.
      *
      * @param null|mixed $exception
-     *
-     * @return void
      */
     public function invokeEvent(string $type, MessageInterface $message, $exception = null);
 }
