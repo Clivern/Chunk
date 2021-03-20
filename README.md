@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="chunk Logo" src="https://raw.githubusercontent.com/clivern/chunk/master/assets/img/gopher.png?v=2.0.0" width="180" />
+    <img alt="chunk Logo" src="/assets/img/gopher.png?v=2.0.1" width="180" />
     <h3 align="center">Chunk</h3>
     <p align="center">Asynchronous Task Queue Based on Distributed Message Passing for PHP</p>
     <p align="center">
@@ -7,7 +7,7 @@
             <img src="https://github.com/clivern/chunk/actions/workflows/php.yml/badge.svg">
         </a>
         <a href="https://packagist.org/packages/clivern/chunk">
-            <img src="https://img.shields.io/badge/Version-2.0.0-red.svg">
+            <img src="https://img.shields.io/badge/Version-2.0.1-red.svg">
         </a>
         <a href="https://github.com/Clivern/Chunk/blob/master/LICENSE">
             <img src="https://img.shields.io/badge/LICENSE-MIT-orange.svg">
